@@ -1,23 +1,61 @@
 
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AuthLayout from "@/components/auth/AuthLayout";
-import AuthForm from "@/components/auth/AuthForm";
 import { useToast } from "@/hooks/use-toast";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { supabase } from "@/integrations/supabase/client";
 
 const OrganizerSignup = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [fullName, setFullName] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const handleSignup = (data: any) => {
-    // TODO: Integrate with Supabase authentication
-    console.log("Organizer signup data:", data);
-    toast({
-      title: "Account Created!",
-      description: "Welcome to EventFlow! Please check your email to verify your account.",
-    });
-    // Navigate to dashboard after successful signup
-    // navigate("/organizer/dashboard");
+  const handleSignup = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+
+    try {
+      const { data, error } = await supabase.auth.signUp({
+        email,
+        password,
+        options: {
+          data: {
+            full_name: fullName,
+            user_type: 'organizer'
+          }
+        }
+      });
+
+      if (error) throw error;
+
+      if (data.user) {
+        // Update profile with user type
+        await supabase.from('profiles').update({
+          user_type: 'organizer',
+          full_name: fullName
+        }).eq('id', data.user.id);
+
+        toast({
+          title: "Account Created!",
+          description: "Welcome to EventFlow! Please check your email to verify your account.",
+        });
+        navigate("/organizer/dashboard");
+      }
+    } catch (error: any) {
+      toast({
+        title: "Error",
+        description: error.message,
+        variant: "destructive",
+      });
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -26,11 +64,48 @@ const OrganizerSignup = () => {
       subtitle="Create amazing events with our comprehensive platform"
       userType="organizer"
     >
-      <AuthForm
-        isSignup={true}
-        userType="organizer"
-        onSubmit={handleSignup}
-      />
+      <form onSubmit={handleSignup} className="space-y-4">
+        <div>
+          <Label htmlFor="fullName" className="text-white">Full Name</Label>
+          <Input
+            id="fullName"
+            type="text"
+            value={fullName}
+            onChange={(e) => setFullName(e.target.value)}
+            className="bg-white/5 border-white/10 text-white"
+            required
+          />
+        </div>
+        <div>
+          <Label htmlFor="email" className="text-white">Email</Label>
+          <Input
+            id="email"
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className="bg-white/5 border-white/10 text-white"
+            required
+          />
+        </div>
+        <div>
+          <Label htmlFor="password" className="text-white">Password</Label>
+          <Input
+            id="password"
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            className="bg-white/5 border-white/10 text-white"
+            required
+          />
+        </div>
+        <Button 
+          type="submit" 
+          className="w-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600"
+          disabled={loading}
+        >
+          {loading ? "Creating account..." : "Create Account"}
+        </Button>
+      </form>
       
       <div className="mt-6 text-center">
         <p className="text-gray-400">
