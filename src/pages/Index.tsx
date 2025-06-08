@@ -156,7 +156,7 @@ const Index = () => {
             variants={itemVariants}
             className="flex flex-col sm:flex-row gap-4 justify-center"
           >
-            <Button size="lg" className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white px-8 py-4 text-lg group">
+            <Button size="lg" className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white px-8 py-4 text-lg group" onClick={() => window.location.href = '/organizer/signup'}>
               Start Your Event
               <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
             </Button>
@@ -252,7 +252,7 @@ const Index = () => {
                   </CardHeader>
                   
                   <CardContent>
-                    <ul className="space-y-3">
+                    <ul className="space-y-3 mb-6">
                       {type.benefits.map((benefit, i) => (
                         <li key={i} className="flex items-center text-gray-300">
                           <CheckCircle className="w-5 h-5 text-green-400 mr-3 flex-shrink-0" />
@@ -260,6 +260,38 @@ const Index = () => {
                         </li>
                       ))}
                     </ul>
+                    
+                    <div className="space-y-2">
+                      <Button 
+                        className={`w-full bg-gradient-to-r ${type.gradient} hover:opacity-90 text-white`}
+                        onClick={() => {
+                          const userTypeMap = {
+                            "Event Organizers": "organizer",
+                            "Sponsors": "sponsor", 
+                            "Communities": "community"
+                          };
+                          const userTypeKey = userTypeMap[type.title as keyof typeof userTypeMap];
+                          window.location.href = `/${userTypeKey}/signup`;
+                        }}
+                      >
+                        Get Started
+                      </Button>
+                      <Button 
+                        variant="ghost" 
+                        className="w-full text-gray-400 hover:text-white hover:bg-white/5"
+                        onClick={() => {
+                          const userTypeMap = {
+                            "Event Organizers": "organizer",
+                            "Sponsors": "sponsor", 
+                            "Communities": "community"
+                          };
+                          const userTypeKey = userTypeMap[type.title as keyof typeof userTypeMap];
+                          window.location.href = `/${userTypeKey}/login`;
+                        }}
+                      >
+                        Sign In
+                      </Button>
+                    </div>
                   </CardContent>
                 </Card>
               </motion.div>
