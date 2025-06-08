@@ -1,4 +1,3 @@
-
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -19,8 +18,11 @@ import {
   Target,
   Heart
 } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const Index = () => {
+  const navigate = useNavigate();
+
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -156,7 +158,11 @@ const Index = () => {
             variants={itemVariants}
             className="flex flex-col sm:flex-row gap-4 justify-center"
           >
-            <Button size="lg" className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white px-8 py-4 text-lg group" onClick={() => window.location.href = '/organizer/signup'}>
+            <Button 
+              size="lg" 
+              className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white px-8 py-4 text-lg group" 
+              onClick={() => navigate('/organizer/signup')}
+            >
               Start Your Event
               <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
             </Button>
@@ -271,7 +277,7 @@ const Index = () => {
                             "Communities": "community"
                           };
                           const userTypeKey = userTypeMap[type.title as keyof typeof userTypeMap];
-                          window.location.href = `/${userTypeKey}/signup`;
+                          navigate(`/${userTypeKey}/signup`);
                         }}
                       >
                         Get Started
@@ -286,7 +292,7 @@ const Index = () => {
                             "Communities": "community"
                           };
                           const userTypeKey = userTypeMap[type.title as keyof typeof userTypeMap];
-                          window.location.href = `/${userTypeKey}/login`;
+                          navigate(`/${userTypeKey}/login`);
                         }}
                       >
                         Sign In
@@ -319,7 +325,11 @@ const Index = () => {
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button size="lg" className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white px-12 py-4 text-lg group">
+              <Button 
+                size="lg" 
+                className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white px-12 py-4 text-lg group"
+                onClick={() => navigate('/organizer/signup')}
+              >
                 Get Started Free
                 <Sparkles className="ml-2 h-5 w-5 group-hover:rotate-12 transition-transform" />
               </Button>

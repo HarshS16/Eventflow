@@ -29,7 +29,6 @@ const App = () => (
           <Route path="/sponsor/login" element={<SponsorLogin />} />
           <Route path="/community/signup" element={<CommunitySignup />} />
           <Route path="/community/login" element={<CommunityLogin />} />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
