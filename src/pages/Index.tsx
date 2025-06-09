@@ -1,3 +1,4 @@
+
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -16,7 +17,10 @@ import {
   CheckCircle,
   Globe,
   Target,
-  Heart
+  Heart,
+  Cloud,
+  CloudRain,
+  CloudSnow
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
@@ -41,6 +45,18 @@ const Index = () => {
       opacity: 1,
       transition: {
         duration: 0.5
+      }
+    }
+  };
+
+  const cloudVariants = {
+    animate: {
+      x: [0, 100, 0],
+      y: [0, -20, 0],
+      transition: {
+        duration: 20,
+        repeat: Infinity,
+        ease: "linear"
       }
     }
   };
@@ -89,7 +105,7 @@ const Index = () => {
         "Real-time participant updates"
       ],
       icon: Sparkles,
-      gradient: "from-purple-500 to-pink-500"
+      gradient: "from-purple-600 to-blue-600"
     },
     {
       title: "Sponsors",
@@ -101,7 +117,7 @@ const Index = () => {
         "Brand visibility tracking"
       ],
       icon: Target,
-      gradient: "from-blue-500 to-cyan-500"
+      gradient: "from-blue-600 to-indigo-600"
     },
     {
       title: "Communities",
@@ -113,12 +129,47 @@ const Index = () => {
         "Community growth insights"
       ],
       icon: Heart,
-      gradient: "from-green-500 to-emerald-500"
+      gradient: "from-indigo-600 to-purple-600"
     }
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 text-white overflow-hidden relative">
+      {/* Animated Background Clouds */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <motion.div
+          variants={cloudVariants}
+          animate="animate"
+          className="absolute top-20 left-10 text-purple-400/20"
+        >
+          <Cloud size={80} />
+        </motion.div>
+        <motion.div
+          variants={cloudVariants}
+          animate="animate"
+          style={{ animationDelay: "5s" }}
+          className="absolute top-40 right-20 text-blue-400/20"
+        >
+          <CloudRain size={60} />
+        </motion.div>
+        <motion.div
+          variants={cloudVariants}
+          animate="animate"
+          style={{ animationDelay: "10s" }}
+          className="absolute bottom-40 left-1/4 text-indigo-400/20"
+        >
+          <CloudSnow size={70} />
+        </motion.div>
+        <motion.div
+          variants={cloudVariants}
+          animate="animate"
+          style={{ animationDelay: "15s" }}
+          className="absolute top-60 right-1/3 text-purple-400/20"
+        >
+          <Cloud size={90} />
+        </motion.div>
+      </div>
+
       {/* Hero Section */}
       <motion.section 
         className="relative px-6 py-20 lg:py-32"
@@ -126,11 +177,11 @@ const Index = () => {
         animate="visible"
         variants={containerVariants}
       >
-        <div className="absolute inset-0 bg-gradient-to-r from-purple-500/10 to-pink-500/10 blur-3xl" />
+        <div className="absolute inset-0 bg-gradient-to-r from-purple-600/10 to-blue-600/10 blur-3xl" />
         
         <div className="relative max-w-7xl mx-auto text-center">
           <motion.div variants={itemVariants} className="mb-8">
-            <Badge variant="outline" className="bg-white/5 border-white/20 text-white mb-6">
+            <Badge variant="outline" className="bg-purple-600/20 border-purple-400/30 text-purple-200 mb-6">
               <Zap className="w-4 h-4 mr-2" />
               The Future of Event Management
             </Badge>
@@ -138,17 +189,21 @@ const Index = () => {
           
           <motion.h1 
             variants={itemVariants}
-            className="text-5xl lg:text-7xl font-bold mb-6 bg-gradient-to-r from-white via-gray-200 to-gray-400 bg-clip-text text-transparent"
+            className="text-5xl lg:text-7xl font-bold mb-6 bg-gradient-to-r from-white via-purple-200 to-blue-200 bg-clip-text text-transparent"
           >
             Events Made
-            <span className="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent block">
+            <motion.span 
+              className="bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent block"
+              animate={{ scale: [1, 1.05, 1] }}
+              transition={{ duration: 2, repeat: Infinity }}
+            >
               Effortless
-            </span>
+            </motion.span>
           </motion.h1>
           
           <motion.p 
             variants={itemVariants}
-            className="text-xl lg:text-2xl text-gray-300 mb-12 max-w-4xl mx-auto leading-relaxed"
+            className="text-xl lg:text-2xl text-purple-100 mb-12 max-w-4xl mx-auto leading-relaxed"
           >
             The complete platform connecting organizers, sponsors, and communities. 
             From event creation to execution, we handle everything so you can focus on what matters most.
@@ -158,24 +213,28 @@ const Index = () => {
             variants={itemVariants}
             className="flex flex-col sm:flex-row gap-4 justify-center"
           >
-            <Button 
-              size="lg" 
-              className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white px-8 py-4 text-lg group" 
-              onClick={() => navigate('/organizer/signup')}
-            >
-              Start Your Event
-              <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
-            </Button>
-            <Button variant="outline" size="lg" className="border-white/20 text-white hover:bg-white/10 px-8 py-4 text-lg">
-              Watch Demo
-            </Button>
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              <Button 
+                size="lg" 
+                className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white px-8 py-4 text-lg group shadow-lg shadow-purple-500/25" 
+                onClick={() => navigate('/organizer/signup')}
+              >
+                Start Your Event
+                <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+              </Button>
+            </motion.div>
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              <Button variant="outline" size="lg" className="border-purple-400/30 text-purple-200 hover:bg-purple-600/20 px-8 py-4 text-lg">
+                Watch Demo
+              </Button>
+            </motion.div>
           </motion.div>
         </div>
       </motion.section>
 
       {/* Features Section */}
       <motion.section 
-        className="px-6 py-20 bg-black/30"
+        className="px-6 py-20 bg-gradient-to-r from-slate-900/50 to-purple-900/50 backdrop-blur-sm"
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true }}
@@ -183,10 +242,10 @@ const Index = () => {
       >
         <div className="max-w-7xl mx-auto">
           <motion.div variants={itemVariants} className="text-center mb-16">
-            <h2 className="text-4xl lg:text-5xl font-bold mb-6">
+            <h2 className="text-4xl lg:text-5xl font-bold mb-6 bg-gradient-to-r from-white to-purple-200 bg-clip-text text-transparent">
               Everything You Need in One Platform
             </h2>
-            <p className="text-xl text-gray-400 max-w-3xl mx-auto">
+            <p className="text-xl text-purple-200 max-w-3xl mx-auto">
               Streamline your entire event lifecycle with our comprehensive suite of tools
             </p>
           </motion.div>
@@ -199,15 +258,19 @@ const Index = () => {
                 whileHover={{ scale: 1.05, y: -5 }}
                 transition={{ duration: 0.3 }}
               >
-                <Card className="bg-white/5 border-white/10 backdrop-blur-sm hover:bg-white/10 transition-all duration-300 h-full group">
+                <Card className="bg-slate-800/50 border-purple-500/20 backdrop-blur-sm hover:bg-slate-800/70 transition-all duration-300 h-full group shadow-lg shadow-purple-500/10">
                   <CardHeader>
-                    <div className="w-12 h-12 bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                    <motion.div 
+                      className="w-12 h-12 bg-gradient-to-r from-purple-600 to-blue-600 rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform shadow-lg"
+                      whileHover={{ rotate: 360 }}
+                      transition={{ duration: 0.5 }}
+                    >
                       <feature.icon className="w-6 h-6 text-white" />
-                    </div>
+                    </motion.div>
                     <CardTitle className="text-white text-xl">{feature.title}</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <CardDescription className="text-gray-400 text-base">
+                    <CardDescription className="text-purple-200 text-base">
                       {feature.description}
                     </CardDescription>
                   </CardContent>
@@ -228,10 +291,10 @@ const Index = () => {
       >
         <div className="max-w-7xl mx-auto">
           <motion.div variants={itemVariants} className="text-center mb-16">
-            <h2 className="text-4xl lg:text-5xl font-bold mb-6">
+            <h2 className="text-4xl lg:text-5xl font-bold mb-6 bg-gradient-to-r from-white to-purple-200 bg-clip-text text-transparent">
               Built for Every Stakeholder
             </h2>
-            <p className="text-xl text-gray-400 max-w-3xl mx-auto">
+            <p className="text-xl text-purple-200 max-w-3xl mx-auto">
               Whether you're organizing, sponsoring, or promoting - we've got you covered
             </p>
           </motion.div>
@@ -241,18 +304,22 @@ const Index = () => {
               <motion.div
                 key={type.title}
                 variants={itemVariants}
-                whileHover={{ scale: 1.02 }}
+                whileHover={{ scale: 1.02, rotateY: 5 }}
                 transition={{ duration: 0.3 }}
               >
-                <Card className="bg-white/5 border-white/10 backdrop-blur-sm hover:bg-white/10 transition-all duration-300 h-full relative overflow-hidden group">
+                <Card className="bg-slate-800/50 border-purple-500/20 backdrop-blur-sm hover:bg-slate-800/70 transition-all duration-300 h-full relative overflow-hidden group shadow-xl shadow-purple-500/20">
                   <div className={`absolute top-0 left-0 w-full h-1 bg-gradient-to-r ${type.gradient}`} />
                   
                   <CardHeader className="pb-4">
-                    <div className={`w-16 h-16 bg-gradient-to-r ${type.gradient} rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`}>
+                    <motion.div 
+                      className={`w-16 h-16 bg-gradient-to-r ${type.gradient} rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform shadow-lg`}
+                      whileHover={{ rotate: [0, -10, 10, 0] }}
+                      transition={{ duration: 0.5 }}
+                    >
                       <type.icon className="w-8 h-8 text-white" />
-                    </div>
+                    </motion.div>
                     <CardTitle className="text-white text-2xl">{type.title}</CardTitle>
-                    <CardDescription className="text-gray-300 text-lg">
+                    <CardDescription className="text-purple-200 text-lg">
                       {type.subtitle}
                     </CardDescription>
                   </CardHeader>
@@ -260,31 +327,39 @@ const Index = () => {
                   <CardContent>
                     <ul className="space-y-3 mb-6">
                       {type.benefits.map((benefit, i) => (
-                        <li key={i} className="flex items-center text-gray-300">
+                        <motion.li 
+                          key={i} 
+                          className="flex items-center text-purple-100"
+                          initial={{ opacity: 0, x: -20 }}
+                          whileInView={{ opacity: 1, x: 0 }}
+                          transition={{ delay: i * 0.1 }}
+                        >
                           <CheckCircle className="w-5 h-5 text-green-400 mr-3 flex-shrink-0" />
                           {benefit}
-                        </li>
+                        </motion.li>
                       ))}
                     </ul>
                     
                     <div className="space-y-2">
-                      <Button 
-                        className={`w-full bg-gradient-to-r ${type.gradient} hover:opacity-90 text-white`}
-                        onClick={() => {
-                          const userTypeMap = {
-                            "Event Organizers": "organizer",
-                            "Sponsors": "sponsor", 
-                            "Communities": "community"
-                          };
-                          const userTypeKey = userTypeMap[type.title as keyof typeof userTypeMap];
-                          navigate(`/${userTypeKey}/signup`);
-                        }}
-                      >
-                        Get Started
-                      </Button>
+                      <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+                        <Button 
+                          className={`w-full bg-gradient-to-r ${type.gradient} hover:opacity-90 text-white shadow-lg`}
+                          onClick={() => {
+                            const userTypeMap = {
+                              "Event Organizers": "organizer",
+                              "Sponsors": "sponsor", 
+                              "Communities": "community"
+                            };
+                            const userTypeKey = userTypeMap[type.title as keyof typeof userTypeMap];
+                            navigate(`/${userTypeKey}/signup`);
+                          }}
+                        >
+                          Get Started
+                        </Button>
+                      </motion.div>
                       <Button 
                         variant="ghost" 
-                        className="w-full text-gray-400 hover:text-white hover:bg-white/5"
+                        className="w-full text-purple-200 hover:text-white hover:bg-purple-600/20"
                         onClick={() => {
                           const userTypeMap = {
                             "Event Organizers": "organizer",
@@ -308,7 +383,7 @@ const Index = () => {
 
       {/* CTA Section */}
       <motion.section 
-        className="px-6 py-20 bg-gradient-to-r from-purple-900/20 to-pink-900/20"
+        className="px-6 py-20 bg-gradient-to-r from-purple-900/30 to-blue-900/30 backdrop-blur-sm"
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true }}
@@ -316,35 +391,44 @@ const Index = () => {
       >
         <div className="max-w-4xl mx-auto text-center">
           <motion.div variants={itemVariants}>
-            <Globe className="w-16 h-16 text-purple-400 mx-auto mb-8" />
-            <h2 className="text-4xl lg:text-5xl font-bold mb-6">
+            <motion.div
+              animate={{ rotate: 360 }}
+              transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+            >
+              <Globe className="w-16 h-16 text-purple-400 mx-auto mb-8" />
+            </motion.div>
+            <h2 className="text-4xl lg:text-5xl font-bold mb-6 bg-gradient-to-r from-white to-purple-200 bg-clip-text text-transparent">
               Ready to Transform Your Events?
             </h2>
-            <p className="text-xl text-gray-300 mb-12 max-w-2xl mx-auto">
+            <p className="text-xl text-purple-100 mb-12 max-w-2xl mx-auto">
               Join thousands of organizers who are already creating unforgettable experiences with our platform
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button 
-                size="lg" 
-                className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white px-12 py-4 text-lg group"
-                onClick={() => navigate('/organizer/signup')}
-              >
-                Get Started Free
-                <Sparkles className="ml-2 h-5 w-5 group-hover:rotate-12 transition-transform" />
-              </Button>
-              <Button variant="outline" size="lg" className="border-white/20 text-white hover:bg-white/10 px-12 py-4 text-lg">
-                Schedule Demo
-              </Button>
+              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                <Button 
+                  size="lg" 
+                  className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white px-12 py-4 text-lg group shadow-lg shadow-purple-500/25"
+                  onClick={() => navigate('/organizer/signup')}
+                >
+                  Get Started Free
+                  <Sparkles className="ml-2 h-5 w-5 group-hover:rotate-12 transition-transform" />
+                </Button>
+              </motion.div>
+              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                <Button variant="outline" size="lg" className="border-purple-400/30 text-purple-200 hover:bg-purple-600/20 px-12 py-4 text-lg">
+                  Schedule Demo
+                </Button>
+              </motion.div>
             </div>
           </motion.div>
         </div>
       </motion.section>
 
       {/* Footer */}
-      <footer className="px-6 py-12 bg-black/50 border-t border-white/10">
+      <footer className="px-6 py-12 bg-slate-900/80 border-t border-purple-500/20 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto text-center">
-          <p className="text-gray-400">
+          <p className="text-purple-200">
             © 2024 EventFlow. Building the future of event management.
           </p>
         </div>
