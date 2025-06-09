@@ -1,31 +1,88 @@
 
 import { motion } from "framer-motion";
+import { ArrowRight, Users, Target, Globe, CheckCircle, Star, Cloud, CloudRain, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { 
-  Calendar, 
-  Users, 
-  DollarSign, 
-  Zap, 
-  QrCode, 
-  MessageSquare, 
-  BarChart3, 
-  Shield,
-  Sparkles,
-  ArrowRight,
-  CheckCircle,
-  Globe,
-  Target,
-  Heart,
-  Cloud,
-  CloudRain,
-  CloudSnow
-} from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import Layout from "@/components/layout/Layout";
 
 const Index = () => {
   const navigate = useNavigate();
+
+  const userTypes = [
+    {
+      title: "Event Organizers",
+      description: "Create, manage, and promote your events with powerful tools and seamless sponsor matching.",
+      icon: Users,
+      color: "from-purple-600 to-blue-600",
+      features: ["Event Management", "Sponsor Matching", "Analytics Dashboard", "Ticket Sales"],
+      cta: "Start Organizing",
+      href: "/organizer/signup"
+    },
+    {
+      title: "Sponsors",
+      description: "Discover meaningful partnership opportunities and connect with events that align with your brand.",
+      icon: Target,
+      color: "from-blue-600 to-indigo-600",
+      features: ["Event Discovery", "ROI Tracking", "Brand Exposure", "Partnership Management"],
+      cta: "Find Opportunities",
+      href: "/sponsor/signup"
+    },
+    {
+      title: "Community Partners",
+      description: "Amplify local events and strengthen community connections through strategic partnerships.",
+      icon: Globe,
+      color: "from-indigo-600 to-purple-600",
+      features: ["Community Events", "Local Networking", "Resource Sharing", "Impact Measurement"],
+      cta: "Join Community",
+      href: "/community/signup"
+    }
+  ];
+
+  const features = [
+    "End-to-end event management platform",
+    "AI-powered sponsor matching",
+    "Real-time analytics and insights",
+    "Integrated payment processing",
+    "Community engagement tools",
+    "24/7 customer support"
+  ];
+
+  const testimonials = [
+    {
+      name: "Sarah Johnson",
+      role: "Event Organizer",
+      company: "TechCorp Events",
+      quote: "EventFlow transformed how we manage our conferences. The sponsor matching feature alone saved us months of outreach.",
+      rating: 5
+    },
+    {
+      name: "Michael Chen",
+      role: "Marketing Director",
+      company: "BrandMax",
+      quote: "We've found incredible partnership opportunities through EventFlow. The platform makes it easy to track our ROI.",
+      rating: 5
+    },
+    {
+      name: "Emily Rodriguez",
+      role: "Community Manager",
+      company: "Local Impact",
+      quote: "The community features help us amplify local events and create meaningful connections in our neighborhood.",
+      rating: 5
+    }
+  ];
+
+  const cloudVariants = {
+    animate: {
+      x: [0, 100, 0],
+      y: [0, -20, 0],
+      transition: {
+        duration: 30,
+        repeat: Infinity,
+        ease: "linear"
+      }
+    }
+  };
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -49,391 +106,322 @@ const Index = () => {
     }
   };
 
-  const cloudVariants = {
-    animate: {
-      x: [0, 100, 0],
-      y: [0, -20, 0],
-      transition: {
-        duration: 20,
-        repeat: Infinity,
-        ease: "linear"
-      }
-    }
-  };
-
-  const features = [
-    {
-      icon: Calendar,
-      title: "Smart Event Creation",
-      description: "Create and manage events with intelligent templates and automated workflows"
-    },
-    {
-      icon: DollarSign,
-      title: "Sponsor Matching",
-      description: "AI-powered sponsor discovery and automatic partnership recommendations"
-    },
-    {
-      icon: Users,
-      title: "Community Network",
-      description: "Connect with communities ready to promote and amplify your events"
-    },
-    {
-      icon: QrCode,
-      title: "QR Ticketing",
-      description: "Seamless ticket generation, distribution, and validation system"
-    },
-    {
-      icon: MessageSquare,
-      title: "Automated Communication",
-      description: "Smart messaging system for participants, sponsors, and communities"
-    },
-    {
-      icon: BarChart3,
-      title: "Analytics Dashboard",
-      description: "Real-time insights and performance metrics for all your events"
-    }
-  ];
-
-  const userTypes = [
-    {
-      title: "Event Organizers",
-      subtitle: "Focus on creating amazing experiences",
-      benefits: [
-        "End-to-end event management",
-        "Automated sponsor discovery",
-        "Community outreach handled",
-        "Real-time participant updates"
-      ],
-      icon: Sparkles,
-      gradient: "from-purple-600 to-blue-600"
-    },
-    {
-      title: "Sponsors",
-      subtitle: "Discover the perfect promotional opportunities",
-      benefits: [
-        "Curated event recommendations",
-        "Direct organizer connections",
-        "Performance analytics",
-        "Brand visibility tracking"
-      ],
-      icon: Target,
-      gradient: "from-blue-600 to-indigo-600"
-    },
-    {
-      title: "Communities",
-      subtitle: "Monetize your audience engagement",
-      benefits: [
-        "Exclusive event partnerships",
-        "Revenue sharing programs",
-        "Content creation tools",
-        "Community growth insights"
-      ],
-      icon: Heart,
-      gradient: "from-indigo-600 to-purple-600"
-    }
-  ];
-
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 text-white overflow-hidden relative">
-      {/* Animated Background Clouds */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <motion.div
-          variants={cloudVariants}
-          animate="animate"
-          className="absolute top-20 left-10 text-purple-400/20"
-        >
-          <Cloud size={80} />
-        </motion.div>
-        <motion.div
-          variants={cloudVariants}
-          animate="animate"
-          style={{ animationDelay: "5s" }}
-          className="absolute top-40 right-20 text-blue-400/20"
-        >
-          <CloudRain size={60} />
-        </motion.div>
-        <motion.div
-          variants={cloudVariants}
-          animate="animate"
-          style={{ animationDelay: "10s" }}
-          className="absolute bottom-40 left-1/4 text-indigo-400/20"
-        >
-          <CloudSnow size={70} />
-        </motion.div>
-        <motion.div
-          variants={cloudVariants}
-          animate="animate"
-          style={{ animationDelay: "15s" }}
-          className="absolute top-60 right-1/3 text-purple-400/20"
-        >
-          <Cloud size={90} />
-        </motion.div>
-      </div>
-
-      {/* Hero Section */}
-      <motion.section 
-        className="relative px-6 py-20 lg:py-32"
-        initial="hidden"
-        animate="visible"
-        variants={containerVariants}
-      >
-        <div className="absolute inset-0 bg-gradient-to-r from-purple-600/10 to-blue-600/10 blur-3xl" />
-        
-        <div className="relative max-w-7xl mx-auto text-center">
-          <motion.div variants={itemVariants} className="mb-8">
-            <Badge variant="outline" className="bg-purple-600/20 border-purple-400/30 text-purple-200 mb-6">
-              <Zap className="w-4 h-4 mr-2" />
-              The Future of Event Management
-            </Badge>
-          </motion.div>
-          
-          <motion.h1 
-            variants={itemVariants}
-            className="text-5xl lg:text-7xl font-bold mb-6 bg-gradient-to-r from-white via-purple-200 to-blue-200 bg-clip-text text-transparent"
+    <Layout>
+      <div className="bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 text-white relative overflow-hidden">
+        {/* Animated Background Clouds */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <motion.div
+            variants={cloudVariants}
+            animate="animate"
+            className="absolute top-20 left-10 text-purple-400/10"
           >
-            Events Made
-            <motion.span 
-              className="bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent block"
-              animate={{ scale: [1, 1.05, 1] }}
-              transition={{ duration: 2, repeat: Infinity }}
+            <Cloud size={120} />
+          </motion.div>
+          <motion.div
+            variants={cloudVariants}
+            animate="animate"
+            style={{ animationDelay: "10s" }}
+            className="absolute bottom-20 right-10 text-blue-400/10"
+          >
+            <CloudRain size={100} />
+          </motion.div>
+          <motion.div
+            variants={cloudVariants}
+            animate="animate"
+            style={{ animationDelay: "20s" }}
+            className="absolute top-1/2 left-1/3 text-indigo-400/10"
+          >
+            <Cloud size={150} />
+          </motion.div>
+          <motion.div
+            variants={cloudVariants}
+            animate="animate"
+            style={{ animationDelay: "15s" }}
+            className="absolute bottom-1/3 left-20 text-purple-400/5"
+          >
+            <CloudRain size={90} />
+          </motion.div>
+        </div>
+
+        {/* Hero Section */}
+        <section className="relative z-10 py-20 px-6">
+          <div className="max-w-6xl mx-auto text-center">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
             >
-              Effortless
-            </motion.span>
-          </motion.h1>
-          
-          <motion.p 
-            variants={itemVariants}
-            className="text-xl lg:text-2xl text-purple-100 mb-12 max-w-4xl mx-auto leading-relaxed"
-          >
-            The complete platform connecting organizers, sponsors, and communities. 
-            From event creation to execution, we handle everything so you can focus on what matters most.
-          </motion.p>
-          
-          <motion.div 
-            variants={itemVariants}
-            className="flex flex-col sm:flex-row gap-4 justify-center"
-          >
-            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-              <Button 
-                size="lg" 
-                className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white px-8 py-4 text-lg group shadow-lg shadow-purple-500/25" 
-                onClick={() => navigate('/organizer/signup')}
-              >
-                Start Your Event
-                <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
-              </Button>
-            </motion.div>
-            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-              <Button variant="outline" size="lg" className="border-purple-400/30 text-purple-200 hover:bg-purple-600/20 px-8 py-4 text-lg">
-                Watch Demo
-              </Button>
-            </motion.div>
-          </motion.div>
-        </div>
-      </motion.section>
-
-      {/* Features Section */}
-      <motion.section 
-        className="px-6 py-20 bg-gradient-to-r from-slate-900/50 to-purple-900/50 backdrop-blur-sm"
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true }}
-        variants={containerVariants}
-      >
-        <div className="max-w-7xl mx-auto">
-          <motion.div variants={itemVariants} className="text-center mb-16">
-            <h2 className="text-4xl lg:text-5xl font-bold mb-6 bg-gradient-to-r from-white to-purple-200 bg-clip-text text-transparent">
-              Everything You Need in One Platform
-            </h2>
-            <p className="text-xl text-purple-200 max-w-3xl mx-auto">
-              Streamline your entire event lifecycle with our comprehensive suite of tools
-            </p>
-          </motion.div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {features.map((feature, index) => (
               <motion.div
-                key={feature.title}
-                variants={itemVariants}
-                whileHover={{ scale: 1.05, y: -5 }}
-                transition={{ duration: 0.3 }}
+                className="inline-flex items-center space-x-2 bg-slate-800/50 backdrop-blur-sm border border-purple-500/20 rounded-full px-6 py-3 mb-8"
+                whileHover={{ scale: 1.05 }}
               >
-                <Card className="bg-slate-800/50 border-purple-500/20 backdrop-blur-sm hover:bg-slate-800/70 transition-all duration-300 h-full group shadow-lg shadow-purple-500/10">
-                  <CardHeader>
-                    <motion.div 
-                      className="w-12 h-12 bg-gradient-to-r from-purple-600 to-blue-600 rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform shadow-lg"
-                      whileHover={{ rotate: 360 }}
-                      transition={{ duration: 0.5 }}
-                    >
-                      <feature.icon className="w-6 h-6 text-white" />
-                    </motion.div>
-                    <CardTitle className="text-white text-xl">{feature.title}</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <CardDescription className="text-purple-200 text-base">
-                      {feature.description}
-                    </CardDescription>
-                  </CardContent>
-                </Card>
+                <Sparkles className="w-5 h-5 text-purple-400" />
+                <span className="text-purple-200">Connecting Events, Sponsors & Communities</span>
               </motion.div>
-            ))}
-          </div>
-        </div>
-      </motion.section>
-
-      {/* User Types Section */}
-      <motion.section 
-        className="px-6 py-20"
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true }}
-        variants={containerVariants}
-      >
-        <div className="max-w-7xl mx-auto">
-          <motion.div variants={itemVariants} className="text-center mb-16">
-            <h2 className="text-4xl lg:text-5xl font-bold mb-6 bg-gradient-to-r from-white to-purple-200 bg-clip-text text-transparent">
-              Built for Every Stakeholder
-            </h2>
-            <p className="text-xl text-purple-200 max-w-3xl mx-auto">
-              Whether you're organizing, sponsoring, or promoting - we've got you covered
-            </p>
-          </motion.div>
-          
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            {userTypes.map((type, index) => (
-              <motion.div
-                key={type.title}
-                variants={itemVariants}
-                whileHover={{ scale: 1.02, rotateY: 5 }}
-                transition={{ duration: 0.3 }}
+              
+              <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-white via-purple-200 to-blue-200 bg-clip-text text-transparent">
+                EventFlow
+              </h1>
+              <p className="text-xl md:text-2xl text-purple-200 mb-8 max-w-3xl mx-auto leading-relaxed">
+                The complete platform connecting organizers, sponsors, and communities for seamless event management and meaningful partnerships.
+              </p>
+              
+              <motion.div 
+                className="flex flex-col sm:flex-row gap-4 justify-center items-center"
+                variants={containerVariants}
+                initial="hidden"
+                animate="visible"
               >
-                <Card className="bg-slate-800/50 border-purple-500/20 backdrop-blur-sm hover:bg-slate-800/70 transition-all duration-300 h-full relative overflow-hidden group shadow-xl shadow-purple-500/20">
-                  <div className={`absolute top-0 left-0 w-full h-1 bg-gradient-to-r ${type.gradient}`} />
-                  
-                  <CardHeader className="pb-4">
-                    <motion.div 
-                      className={`w-16 h-16 bg-gradient-to-r ${type.gradient} rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform shadow-lg`}
-                      whileHover={{ rotate: [0, -10, 10, 0] }}
-                      transition={{ duration: 0.5 }}
-                    >
-                      <type.icon className="w-8 h-8 text-white" />
-                    </motion.div>
-                    <CardTitle className="text-white text-2xl">{type.title}</CardTitle>
-                    <CardDescription className="text-purple-200 text-lg">
-                      {type.subtitle}
-                    </CardDescription>
-                  </CardHeader>
-                  
-                  <CardContent>
-                    <ul className="space-y-3 mb-6">
-                      {type.benefits.map((benefit, i) => (
-                        <motion.li 
-                          key={i} 
-                          className="flex items-center text-purple-100"
-                          initial={{ opacity: 0, x: -20 }}
-                          whileInView={{ opacity: 1, x: 0 }}
-                          transition={{ delay: i * 0.1 }}
-                        >
-                          <CheckCircle className="w-5 h-5 text-green-400 mr-3 flex-shrink-0" />
-                          {benefit}
-                        </motion.li>
-                      ))}
-                    </ul>
-                    
-                    <div className="space-y-2">
-                      <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+                <motion.div variants={itemVariants} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                  <Button 
+                    size="lg" 
+                    className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white px-8 py-4 text-lg shadow-2xl shadow-purple-500/25 group"
+                    onClick={() => navigate("/organizer/signup")}
+                  >
+                    Get Started Free
+                    <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                  </Button>
+                </motion.div>
+                <motion.div variants={itemVariants} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                  <Button 
+                    variant="outline" 
+                    size="lg"
+                    className="border-purple-400/30 text-purple-200 hover:bg-purple-600/20 px-8 py-4 text-lg backdrop-blur-sm"
+                  >
+                    Watch Demo
+                  </Button>
+                </motion.div>
+              </motion.div>
+            </motion.div>
+          </div>
+        </section>
+
+        {/* User Types Section */}
+        <section className="relative z-10 py-20 px-6">
+          <div className="max-w-7xl mx-auto">
+            <motion.div 
+              className="text-center mb-16"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              viewport={{ once: true }}
+            >
+              <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-white to-purple-200 bg-clip-text text-transparent">
+                Built for Everyone
+              </h2>
+              <p className="text-xl text-purple-200 max-w-3xl mx-auto">
+                Whether you're organizing events, seeking sponsorships, or building community connections, EventFlow has the tools you need.
+              </p>
+            </motion.div>
+
+            <motion.div 
+              className="grid grid-cols-1 md:grid-cols-3 gap-8"
+              variants={containerVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+            >
+              {userTypes.map((type, index) => (
+                <motion.div
+                  key={type.title}
+                  variants={itemVariants}
+                  whileHover={{ scale: 1.02, y: -10 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <Card className="bg-slate-800/50 border-purple-500/20 backdrop-blur-sm hover:bg-slate-800/70 transition-all h-full shadow-xl shadow-purple-500/10">
+                    <CardHeader className="text-center pb-4">
+                      <motion.div 
+                        className={`w-16 h-16 bg-gradient-to-r ${type.color} rounded-xl mx-auto mb-4 flex items-center justify-center shadow-lg`}
+                        whileHover={{ rotate: 360 }}
+                        transition={{ duration: 0.5 }}
+                      >
+                        <type.icon className="w-8 h-8 text-white" />
+                      </motion.div>
+                      <CardTitle className="text-2xl text-white mb-2">{type.title}</CardTitle>
+                      <CardDescription className="text-purple-200 text-base">
+                        {type.description}
+                      </CardDescription>
+                    </CardHeader>
+                    <CardContent className="space-y-6">
+                      <ul className="space-y-3">
+                        {type.features.map((feature, idx) => (
+                          <motion.li 
+                            key={idx} 
+                            className="flex items-center text-purple-100"
+                            initial={{ opacity: 0, x: -10 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            transition={{ delay: idx * 0.1 }}
+                          >
+                            <CheckCircle className="w-5 h-5 text-green-400 mr-3 flex-shrink-0" />
+                            {feature}
+                          </motion.li>
+                        ))}
+                      </ul>
+                      <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                         <Button 
-                          className={`w-full bg-gradient-to-r ${type.gradient} hover:opacity-90 text-white shadow-lg`}
-                          onClick={() => {
-                            const userTypeMap = {
-                              "Event Organizers": "organizer",
-                              "Sponsors": "sponsor", 
-                              "Communities": "community"
-                            };
-                            const userTypeKey = userTypeMap[type.title as keyof typeof userTypeMap];
-                            navigate(`/${userTypeKey}/signup`);
-                          }}
+                          className={`w-full bg-gradient-to-r ${type.color} hover:opacity-90 text-white shadow-lg`}
+                          onClick={() => navigate(type.href)}
                         >
-                          Get Started
+                          {type.cta}
+                          <ArrowRight className="ml-2 w-4 h-4" />
                         </Button>
                       </motion.div>
-                      <Button 
-                        variant="ghost" 
-                        className="w-full text-purple-200 hover:text-white hover:bg-purple-600/20"
-                        onClick={() => {
-                          const userTypeMap = {
-                            "Event Organizers": "organizer",
-                            "Sponsors": "sponsor", 
-                            "Communities": "community"
-                          };
-                          const userTypeKey = userTypeMap[type.title as keyof typeof userTypeMap];
-                          navigate(`/${userTypeKey}/login`);
-                        }}
-                      >
-                        Sign In
-                      </Button>
-                    </div>
-                  </CardContent>
-                </Card>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </motion.section>
-
-      {/* CTA Section */}
-      <motion.section 
-        className="px-6 py-20 bg-gradient-to-r from-purple-900/30 to-blue-900/30 backdrop-blur-sm"
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true }}
-        variants={containerVariants}
-      >
-        <div className="max-w-4xl mx-auto text-center">
-          <motion.div variants={itemVariants}>
-            <motion.div
-              animate={{ rotate: 360 }}
-              transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-            >
-              <Globe className="w-16 h-16 text-purple-400 mx-auto mb-8" />
+                    </CardContent>
+                  </Card>
+                </motion.div>
+              ))}
             </motion.div>
-            <h2 className="text-4xl lg:text-5xl font-bold mb-6 bg-gradient-to-r from-white to-purple-200 bg-clip-text text-transparent">
-              Ready to Transform Your Events?
+          </div>
+        </section>
+
+        {/* Features Section */}
+        <section className="relative z-10 py-20 px-6 bg-slate-800/20 backdrop-blur-sm">
+          <div className="max-w-6xl mx-auto">
+            <motion.div 
+              className="text-center mb-16"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              viewport={{ once: true }}
+            >
+              <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-white to-purple-200 bg-clip-text text-transparent">
+                Everything You Need
+              </h2>
+              <p className="text-xl text-purple-200">
+                Powerful features designed to streamline your event management workflow
+              </p>
+            </motion.div>
+
+            <motion.div 
+              className="grid grid-cols-1 md:grid-cols-2 gap-4"
+              variants={containerVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+            >
+              {features.map((feature, index) => (
+                <motion.div
+                  key={index}
+                  variants={itemVariants}
+                  whileHover={{ scale: 1.02, x: 10 }}
+                  className="flex items-center space-x-3 p-4 bg-slate-800/30 border border-purple-500/20 rounded-lg backdrop-blur-sm"
+                >
+                  <CheckCircle className="w-6 h-6 text-green-400 flex-shrink-0" />
+                  <span className="text-purple-100 text-lg">{feature}</span>
+                </motion.div>
+              ))}
+            </motion.div>
+          </div>
+        </section>
+
+        {/* Testimonials Section */}
+        <section className="relative z-10 py-20 px-6">
+          <div className="max-w-7xl mx-auto">
+            <motion.div 
+              className="text-center mb-16"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              viewport={{ once: true }}
+            >
+              <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-white to-purple-200 bg-clip-text text-transparent">
+                Loved by Teams
+              </h2>
+              <p className="text-xl text-purple-200">
+                See what our users have to say about EventFlow
+              </p>
+            </motion.div>
+
+            <motion.div 
+              className="grid grid-cols-1 md:grid-cols-3 gap-8"
+              variants={containerVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+            >
+              {testimonials.map((testimonial, index) => (
+                <motion.div
+                  key={index}
+                  variants={itemVariants}
+                  whileHover={{ scale: 1.02, y: -5 }}
+                >
+                  <Card className="bg-slate-800/50 border-purple-500/20 backdrop-blur-sm h-full shadow-xl shadow-purple-500/10">
+                    <CardContent className="p-6">
+                      <div className="flex mb-4">
+                        {[...Array(testimonial.rating)].map((_, i) => (
+                          <Star key={i} className="w-5 h-5 text-yellow-400 fill-current" />
+                        ))}
+                      </div>
+                      <blockquote className="text-purple-100 mb-4 italic">
+                        "{testimonial.quote}"
+                      </blockquote>
+                      <div>
+                        <div className="font-semibold text-white">{testimonial.name}</div>
+                        <div className="text-purple-200 text-sm">{testimonial.role}</div>
+                        <div className="text-purple-300 text-sm">{testimonial.company}</div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </motion.div>
+              ))}
+            </motion.div>
+          </div>
+        </section>
+
+        {/* CTA Section */}
+        <section className="relative z-10 py-20 px-6">
+          <motion.div 
+            className="max-w-4xl mx-auto text-center bg-slate-800/50 backdrop-blur-sm border border-purple-500/20 rounded-2xl p-12 shadow-2xl shadow-purple-500/20"
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+            whileHover={{ scale: 1.02 }}
+          >
+            <motion.div
+              animate={{ rotate: [0, 360] }}
+              transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+              className="inline-block mb-6"
+            >
+              <Sparkles className="w-16 h-16 text-purple-400" />
+            </motion.div>
+            <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-white to-purple-200 bg-clip-text text-transparent">
+              Ready to Get Started?
             </h2>
-            <p className="text-xl text-purple-100 mb-12 max-w-2xl mx-auto">
-              Join thousands of organizers who are already creating unforgettable experiences with our platform
+            <p className="text-xl text-purple-200 mb-8 max-w-2xl mx-auto">
+              Join thousands of event organizers, sponsors, and community partners who are already using EventFlow to create amazing experiences.
             </p>
-            
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+            <motion.div 
+              className="flex flex-col sm:flex-row gap-4 justify-center"
+              variants={containerVariants}
+              initial="hidden"
+              animate="visible"
+            >
+              <motion.div variants={itemVariants} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                 <Button 
                   size="lg" 
-                  className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white px-12 py-4 text-lg group shadow-lg shadow-purple-500/25"
-                  onClick={() => navigate('/organizer/signup')}
+                  className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white px-8 py-4 text-lg shadow-2xl shadow-purple-500/25 group"
+                  onClick={() => navigate("/organizer/signup")}
                 >
-                  Get Started Free
-                  <Sparkles className="ml-2 h-5 w-5 group-hover:rotate-12 transition-transform" />
+                  Start Free Trial
+                  <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </Button>
               </motion.div>
-              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                <Button variant="outline" size="lg" className="border-purple-400/30 text-purple-200 hover:bg-purple-600/20 px-12 py-4 text-lg">
-                  Schedule Demo
+              <motion.div variants={itemVariants} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                <Button 
+                  variant="outline" 
+                  size="lg"
+                  className="border-purple-400/30 text-purple-200 hover:bg-purple-600/20 px-8 py-4 text-lg backdrop-blur-sm"
+                >
+                  Contact Sales
                 </Button>
               </motion.div>
-            </div>
+            </motion.div>
           </motion.div>
-        </div>
-      </motion.section>
-
-      {/* Footer */}
-      <footer className="px-6 py-12 bg-slate-900/80 border-t border-purple-500/20 backdrop-blur-sm">
-        <div className="max-w-7xl mx-auto text-center">
-          <p className="text-purple-200">
-            © 2024 EventFlow. Building the future of event management.
-          </p>
-        </div>
-      </footer>
-    </div>
+        </section>
+      </div>
+    </Layout>
   );
 };
 
