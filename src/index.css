@@ -45,6 +45,12 @@
     --sidebar-accent-foreground: 0 0 0;
     --sidebar-border: 229 229 229;
     --sidebar-ring: 0 0 0;
+
+    /* Custom orange and pink gradient colors */
+    --orange-500: 249 115 22;
+    --orange-600: 234 88 12;
+    --pink-500: 236 72 153;
+    --pink-600: 219 39 119;
   }
 
   .dark {

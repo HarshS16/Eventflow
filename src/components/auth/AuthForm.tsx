@@ -60,7 +60,7 @@ const AuthForm = ({ isSignup, userType, onSubmit }: AuthFormProps) => {
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.1 }}
         >
-          <Label htmlFor="name" className="text-white">
+          <Label htmlFor="name" className="text-black">
             {userType === "organizer" ? "Full Name" : "Contact Name"}
           </Label>
           <Input
@@ -68,7 +68,7 @@ const AuthForm = ({ isSignup, userType, onSubmit }: AuthFormProps) => {
             type="text"
             value={formData.name}
             onChange={(e) => handleInputChange("name", e.target.value)}
-            className="bg-white/10 border-white/20 text-white placeholder:text-gray-400"
+            className="bg-white border-gray-300 text-black placeholder:text-gray-400 focus:border-orange-500"
             placeholder="Enter your name"
             required
           />
@@ -81,7 +81,7 @@ const AuthForm = ({ isSignup, userType, onSubmit }: AuthFormProps) => {
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.2 }}
         >
-          <Label htmlFor="organization" className="text-white">
+          <Label htmlFor="organization" className="text-black">
             {userType === "organizer" ? "Organization/Company" : 
              userType === "sponsor" ? "Company Name" : "Community Name"}
           </Label>
@@ -90,7 +90,7 @@ const AuthForm = ({ isSignup, userType, onSubmit }: AuthFormProps) => {
             type="text"
             value={formData.organization}
             onChange={(e) => handleInputChange("organization", e.target.value)}
-            className="bg-white/10 border-white/20 text-white placeholder:text-gray-400"
+            className="bg-white border-gray-300 text-black placeholder:text-gray-400 focus:border-orange-500"
             placeholder={`Enter your ${userType === "community" ? "community" : "organization"} name`}
             required
           />
@@ -102,13 +102,13 @@ const AuthForm = ({ isSignup, userType, onSubmit }: AuthFormProps) => {
         animate={{ opacity: 1, x: 0 }}
         transition={{ delay: 0.3 }}
       >
-        <Label htmlFor="email" className="text-white">Email Address</Label>
+        <Label htmlFor="email" className="text-black">Email Address</Label>
         <Input
           id="email"
           type="email"
           value={formData.email}
           onChange={(e) => handleInputChange("email", e.target.value)}
-          className="bg-white/10 border-white/20 text-white placeholder:text-gray-400"
+          className="bg-white border-gray-300 text-black placeholder:text-gray-400 focus:border-orange-500"
           placeholder="Enter your email"
           required
         />
@@ -119,13 +119,13 @@ const AuthForm = ({ isSignup, userType, onSubmit }: AuthFormProps) => {
         animate={{ opacity: 1, x: 0 }}
         transition={{ delay: 0.4 }}
       >
-        <Label htmlFor="password" className="text-white">Password</Label>
+        <Label htmlFor="password" className="text-black">Password</Label>
         <Input
           id="password"
           type="password"
           value={formData.password}
           onChange={(e) => handleInputChange("password", e.target.value)}
-          className="bg-white/10 border-white/20 text-white placeholder:text-gray-400"
+          className="bg-white border-gray-300 text-black placeholder:text-gray-400 focus:border-orange-500"
           placeholder="Enter your password"
           required
         />
@@ -137,13 +137,13 @@ const AuthForm = ({ isSignup, userType, onSubmit }: AuthFormProps) => {
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.5 }}
         >
-          <Label htmlFor="confirmPassword" className="text-white">Confirm Password</Label>
+          <Label htmlFor="confirmPassword" className="text-black">Confirm Password</Label>
           <Input
             id="confirmPassword"
             type="password"
             value={formData.confirmPassword}
             onChange={(e) => handleInputChange("confirmPassword", e.target.value)}
-            className="bg-white/10 border-white/20 text-white placeholder:text-gray-400"
+            className="bg-white border-gray-300 text-black placeholder:text-gray-400 focus:border-orange-500"
             placeholder="Confirm your password"
             required
           />
@@ -161,9 +161,9 @@ const AuthForm = ({ isSignup, userType, onSubmit }: AuthFormProps) => {
             id="terms"
             checked={formData.agreeToTerms}
             onCheckedChange={(checked) => handleInputChange("agreeToTerms", checked as boolean)}
-            className="border-white/20 data-[state=checked]:bg-purple-500"
+            className="border-gray-300 data-[state=checked]:bg-orange-500"
           />
-          <Label htmlFor="terms" className="text-sm text-gray-300">
+          <Label htmlFor="terms" className="text-sm text-gray-600">
             I agree to the terms and conditions
           </Label>
         </motion.div>
@@ -176,7 +176,7 @@ const AuthForm = ({ isSignup, userType, onSubmit }: AuthFormProps) => {
       >
         <Button
           type="submit"
-          className="w-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white"
+          className="w-full bg-gradient-to-r from-orange-500 to-pink-500 hover:from-orange-600 hover:to-pink-600 text-white"
           size="lg"
         >
           {isSignup ? "Create Account" : "Sign In"}

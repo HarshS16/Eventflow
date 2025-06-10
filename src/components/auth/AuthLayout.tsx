@@ -15,9 +15,9 @@ const AuthLayout = ({ children, title, subtitle, userType }: AuthLayoutProps) =>
   const navigate = useNavigate();
 
   const gradients = {
-    organizer: "from-purple-600 to-blue-600",
-    sponsor: "from-blue-600 to-indigo-600",
-    community: "from-indigo-600 to-purple-600"
+    organizer: "from-orange-500 to-pink-500",
+    sponsor: "from-pink-500 to-orange-500",
+    community: "from-orange-500 to-pink-500"
   };
 
   const cloudVariants = {
@@ -33,13 +33,13 @@ const AuthLayout = ({ children, title, subtitle, userType }: AuthLayoutProps) =>
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 text-white flex items-center justify-center p-6 relative overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-white via-gray-50 to-white text-black flex items-center justify-center p-6 relative overflow-hidden">
       {/* Animated Background Elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <motion.div
           variants={cloudVariants}
           animate="animate"
-          className="absolute top-20 left-10 text-purple-400/10"
+          className="absolute top-20 left-10 text-orange-500/10"
         >
           <Cloud size={120} />
         </motion.div>
@@ -47,7 +47,7 @@ const AuthLayout = ({ children, title, subtitle, userType }: AuthLayoutProps) =>
           variants={cloudVariants}
           animate="animate"
           style={{ animationDelay: "7s" }}
-          className="absolute bottom-20 right-10 text-blue-400/10"
+          className="absolute bottom-20 right-10 text-pink-500/10"
         >
           <CloudRain size={100} />
         </motion.div>
@@ -62,14 +62,14 @@ const AuthLayout = ({ children, title, subtitle, userType }: AuthLayoutProps) =>
         <Button
           variant="ghost"
           onClick={() => navigate("/")}
-          className="mb-8 text-purple-200 hover:text-white hover:bg-purple-600/20"
+          className="mb-8 text-gray-600 hover:text-black hover:bg-gray-100"
         >
           <ArrowLeft className="w-4 h-4 mr-2" />
           Back to Home
         </Button>
 
         <motion.div 
-          className="bg-slate-800/50 backdrop-blur-sm border border-purple-500/20 rounded-2xl p-8 shadow-2xl shadow-purple-500/20"
+          className="bg-white/80 backdrop-blur-sm border border-gray-200 rounded-2xl p-8 shadow-2xl shadow-gray-500/10"
           whileHover={{ scale: 1.02 }}
           transition={{ duration: 0.2 }}
         >
@@ -80,7 +80,7 @@ const AuthLayout = ({ children, title, subtitle, userType }: AuthLayoutProps) =>
               transition={{ duration: 0.5 }}
             />
             <motion.h1 
-              className="text-3xl font-bold mb-2 bg-gradient-to-r from-white to-purple-200 bg-clip-text text-transparent"
+              className="text-3xl font-bold mb-2 bg-gradient-to-r from-black to-gray-600 bg-clip-text text-transparent"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.3 }}
@@ -88,7 +88,7 @@ const AuthLayout = ({ children, title, subtitle, userType }: AuthLayoutProps) =>
               {title}
             </motion.h1>
             <motion.p 
-              className="text-purple-200"
+              className="text-gray-600"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.4 }}

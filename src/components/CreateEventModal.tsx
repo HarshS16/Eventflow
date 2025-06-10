@@ -6,6 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { X, Calendar, MapPin, Users, DollarSign } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
+import { useToast } from '@/hooks/use-toast';
 
 interface CreateEventModalProps {
   isOpen: boolean;
@@ -15,6 +16,7 @@ interface CreateEventModalProps {
 
 const CreateEventModal = ({ isOpen, onClose, onEventCreated }: CreateEventModalProps) => {
   const { user } = useAuth();
+  const { toast } = useToast();
   const [formData, setFormData] = useState({
     title: '',
     description: '',
@@ -36,22 +38,55 @@ const CreateEventModal = ({ isOpen, onClose, onEventCreated }: CreateEventModalP
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!user) return;
+    if (!user) {
+      toast({
+        title: "Error",
+        description: "You must be logged in to create an event",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    if (!formData.title.trim()) {
+      toast({
+        title: "Error",
+        description: "Event title is required",
+        variant: "destructive"
+      });
+      return;
+    }
 
     setLoading(true);
     try {
-      const { error } = await supabase
-        .from('events')
-        .insert([
-          {
-            ...formData,
-            organizer_id: user.id,
-            max_attendees: formData.max_attendees ? parseInt(formData.max_attendees) : null,
-            ticket_price: formData.ticket_price ? parseFloat(formData.ticket_price) : null
-          }
-        ]);
+      const eventData = {
+        title: formData.title.trim(),
+        description: formData.description.trim() || null,
+        event_date: formData.event_date || null,
+        location: formData.location.trim() || null,
+        max_attendees: formData.max_attendees ? parseInt(formData.max_attendees) : null,
+        ticket_price: formData.ticket_price ? parseFloat(formData.ticket_price) : null,
+        status: formData.status,
+        organizer_id: user.id
+      };
 
-      if (error) throw error;
+      console.log('Creating event with data:', eventData);
+
+      const { data, error } = await supabase
+        .from('events')
+        .insert([eventData])
+        .select();
+
+      if (error) {
+        console.error('Supabase error:', error);
+        throw error;
+      }
+
+      console.log('Event created successfully:', data);
+
+      toast({
+        title: "Success",
+        description: "Event created successfully!",
+      });
 
       onEventCreated();
       onClose();
@@ -65,8 +100,13 @@ const CreateEventModal = ({ isOpen, onClose, onEventCreated }: CreateEventModalP
         category: '',
         status: 'draft'
       });
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error creating event:', error);
+      toast({
+        title: "Error",
+        description: error.message || "Failed to create event. Please try again.",
+        variant: "destructive"
+      });
     } finally {
       setLoading(false);
     }
@@ -109,7 +149,7 @@ const CreateEventModal = ({ isOpen, onClose, onEventCreated }: CreateEventModalP
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="md:col-span-2">
                       <label className="block text-sm font-medium text-gray-700 mb-2">
-                        Event Title
+                        Event Title *
                       </label>
                       <input
                         type="text"
@@ -117,7 +157,7 @@ const CreateEventModal = ({ isOpen, onClose, onEventCreated }: CreateEventModalP
                         value={formData.title}
                         onChange={handleChange}
                         required
-                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500/50"
+                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500/50 focus:border-orange-500"
                         placeholder="Enter event title"
                       />
                     </div>
@@ -131,7 +171,7 @@ const CreateEventModal = ({ isOpen, onClose, onEventCreated }: CreateEventModalP
                         value={formData.description}
                         onChange={handleChange}
                         rows={3}
-                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500/50"
+                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500/50 focus:border-orange-500"
                         placeholder="Describe your event"
                       />
                     </div>
@@ -146,8 +186,7 @@ const CreateEventModal = ({ isOpen, onClose, onEventCreated }: CreateEventModalP
                         name="event_date"
                         value={formData.event_date}
                         onChange={handleChange}
-                        required
-                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500/50"
+                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500/50 focus:border-orange-500"
                       />
                     </div>
 
@@ -161,7 +200,7 @@ const CreateEventModal = ({ isOpen, onClose, onEventCreated }: CreateEventModalP
                         name="location"
                         value={formData.location}
                         onChange={handleChange}
-                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500/50"
+                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500/50 focus:border-orange-500"
                         placeholder="Event location"
                       />
                     </div>
@@ -177,7 +216,7 @@ const CreateEventModal = ({ isOpen, onClose, onEventCreated }: CreateEventModalP
                         value={formData.max_attendees}
                         onChange={handleChange}
                         min="1"
-                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500/50"
+                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500/50 focus:border-orange-500"
                         placeholder="Maximum attendees"
                       />
                     </div>
@@ -194,30 +233,9 @@ const CreateEventModal = ({ isOpen, onClose, onEventCreated }: CreateEventModalP
                         onChange={handleChange}
                         min="0"
                         step="0.01"
-                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500/50"
+                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500/50 focus:border-orange-500"
                         placeholder="0.00"
                       />
-                    </div>
-
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
-                        Category
-                      </label>
-                      <select
-                        name="category"
-                        value={formData.category}
-                        onChange={handleChange}
-                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500/50"
-                      >
-                        <option value="">Select category</option>
-                        <option value="conference">Conference</option>
-                        <option value="workshop">Workshop</option>
-                        <option value="networking">Networking</option>
-                        <option value="social">Social</option>
-                        <option value="sports">Sports</option>
-                        <option value="arts">Arts & Culture</option>
-                        <option value="other">Other</option>
-                      </select>
                     </div>
 
                     <div>
@@ -228,7 +246,7 @@ const CreateEventModal = ({ isOpen, onClose, onEventCreated }: CreateEventModalP
                         name="status"
                         value={formData.status}
                         onChange={handleChange}
-                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500/50"
+                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500/50 focus:border-orange-500"
                       >
                         <option value="draft">Draft</option>
                         <option value="published">Published</option>
@@ -243,6 +261,7 @@ const CreateEventModal = ({ isOpen, onClose, onEventCreated }: CreateEventModalP
                         variant="outline"
                         onClick={onClose}
                         className="w-full border-gray-300 text-gray-700 hover:bg-gray-50"
+                        disabled={loading}
                       >
                         Cancel
                       </Button>
