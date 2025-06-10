@@ -19,13 +19,18 @@ const EventPage = () => {
   const [showRegistrationForm, setShowRegistrationForm] = useState(false);
 
   useEffect(() => {
+    console.log('EventPage mounted with eventId:', eventId);
     if (eventId) {
       fetchEvent();
+    } else {
+      console.error('No eventId provided');
+      setLoading(false);
     }
   }, [eventId]);
 
   const fetchEvent = async () => {
     try {
+      console.log('Fetching event with ID:', eventId);
       const { data, error } = await supabase
         .from('events')
         .select('*')
@@ -41,6 +46,7 @@ const EventPage = () => {
           variant: "destructive"
         });
       } else {
+        console.log('Event fetched successfully:', data);
         setEvent(data);
       }
     } catch (error) {
@@ -74,6 +80,12 @@ const EventPage = () => {
             <CardContent className="p-8 text-center">
               <h3 className="text-lg font-medium text-black mb-2">Event Not Found</h3>
               <p className="text-gray-600">This event doesn't exist or is not published.</p>
+              <Button 
+                onClick={() => window.location.href = '/'}
+                className="mt-4 bg-gradient-to-r from-orange-500 to-pink-500 hover:from-orange-600 hover:to-pink-600 text-white"
+              >
+                Go to Home
+              </Button>
             </CardContent>
           </Card>
         </div>
