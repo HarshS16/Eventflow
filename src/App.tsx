@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -8,6 +7,7 @@ import { AuthProvider } from "@/contexts/AuthContext";
 import ProtectedRoute from "@/components/ProtectedRoute";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
+import EventPage from "./pages/EventPage";
 import OrganizerSignup from "./pages/auth/OrganizerSignup";
 import OrganizerLogin from "./pages/auth/OrganizerLogin";
 import SponsorSignup from "./pages/auth/SponsorSignup";
@@ -29,6 +29,7 @@ const App = () => (
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Index />} />
+            <Route path="/event/:eventId" element={<EventPage />} />
             <Route path="/organizer/signup" element={<OrganizerSignup />} />
             <Route path="/organizer/login" element={<OrganizerLogin />} />
             <Route path="/sponsor/signup" element={<SponsorSignup />} />

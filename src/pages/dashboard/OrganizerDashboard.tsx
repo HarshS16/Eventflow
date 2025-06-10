@@ -1,22 +1,25 @@
-
 import { useState, useEffect } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Plus, Calendar, Users, DollarSign, BarChart3, Settings, LogOut, Cloud, CloudRain, Sparkles } from 'lucide-react';
+import { Plus, Calendar, Users, DollarSign, BarChart3, Settings, LogOut, Cloud, CloudRain, Sparkles, Share2, Eye } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import CreateEventModal from '@/components/CreateEventModal';
+import EventRegistrations from '@/components/EventRegistrations';
+import { useToast } from '@/hooks/use-toast';
 
 const OrganizerDashboard = () => {
   const { user, signOut } = useAuth();
   const navigate = useNavigate();
+  const { toast } = useToast();
   const [events, setEvents] = useState<any[]>([]);
   const [profile, setProfile] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+  const [selectedEventForRegistrations, setSelectedEventForRegistrations] = useState<any>(null);
 
   useEffect(() => {
     if (user) {
@@ -47,6 +50,21 @@ const OrganizerDashboard = () => {
   const handleSignOut = async () => {
     await signOut();
     navigate('/');
+  };
+
+  const shareEvent = (eventId: string, eventTitle: string) => {
+    const eventUrl = `${window.location.origin}/event/${eventId}`;
+    navigator.clipboard.writeText(eventUrl).then(() => {
+      toast({
+        title: "Link Copied!",
+        description: `Share link for "${eventTitle}" has been copied to clipboard`,
+      });
+    }).catch(() => {
+      toast({
+        title: "Share Link",
+        description: eventUrl,
+      });
+    });
   };
 
   const stats = [
@@ -286,13 +304,40 @@ const OrganizerDashboard = () => {
                       </CardDescription>
                     </CardHeader>
                     <CardContent>
-                      <div className="space-y-2 text-sm text-gray-600">
+                      <div className="space-y-2 text-sm text-gray-600 mb-4">
                         {event.event_date && (
                           <p>Date: {new Date(event.event_date).toLocaleDateString()}</p>
                         )}
                         {event.location && <p>Location: {event.location}</p>}
                         {event.max_attendees && <p>Max Attendees: {event.max_attendees}</p>}
                       </div>
+                      
+                      {event.status === 'published' && (
+                        <div className="flex gap-2">
+                          <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="flex-1">
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              onClick={() => shareEvent(event.id, event.title)}
+                              className="w-full border-orange-300 text-orange-600 hover:bg-orange-50"
+                            >
+                              <Share2 className="w-4 h-4 mr-2" />
+                              Share
+                            </Button>
+                          </motion.div>
+                          <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="flex-1">
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              onClick={() => setSelectedEventForRegistrations(event)}
+                              className="w-full border-purple-300 text-purple-600 hover:bg-purple-50"
+                            >
+                              <Eye className="w-4 h-4 mr-2" />
+                              Registrations
+                            </Button>
+                          </motion.div>
+                        </div>
+                      )}
                     </CardContent>
                   </Card>
                 </motion.div>
@@ -300,6 +345,40 @@ const OrganizerDashboard = () => {
             </div>
           )}
         </motion.div>
+
+        {/* Event Registrations Modal */}
+        {selectedEventForRegistrations && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+            onClick={() => setSelectedEventForRegistrations(null)}
+          >
+            <motion.div
+              initial={{ scale: 0.95, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.95, opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              onClick={(e) => e.stopPropagation()}
+              className="w-full max-w-6xl max-h-[90vh] overflow-y-auto"
+            >
+              <div className="relative">
+                <Button
+                  variant="outline"
+                  onClick={() => setSelectedEventForRegistrations(null)}
+                  className="absolute top-4 right-4 z-10 bg-white border-gray-300"
+                >
+                  Close
+                </Button>
+                <EventRegistrations
+                  eventId={selectedEventForRegistrations.id}
+                  eventTitle={selectedEventForRegistrations.title}
+                />
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
       </div>
 
       <CreateEventModal 
