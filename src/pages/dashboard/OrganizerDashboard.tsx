@@ -8,6 +8,7 @@ import { Badge } from '@/components/ui/badge';
 import { Plus, Calendar, Users, DollarSign, BarChart3, Settings, LogOut, Cloud, CloudRain, Sparkles } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
+import CreateEventModal from '@/components/CreateEventModal';
 
 const OrganizerDashboard = () => {
   const { user, signOut } = useAuth();
@@ -15,6 +16,7 @@ const OrganizerDashboard = () => {
   const [events, setEvents] = useState<any[]>([]);
   const [profile, setProfile] = useState<any>(null);
   const [loading, setLoading] = useState(true);
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
 
   useEffect(() => {
     if (user) {
@@ -48,10 +50,10 @@ const OrganizerDashboard = () => {
   };
 
   const stats = [
-    { title: 'Total Events', value: events.length, icon: Calendar, color: 'from-purple-600 to-blue-600' },
-    { title: 'Published Events', value: events.filter(e => e.status === 'published').length, icon: Users, color: 'from-blue-600 to-indigo-600' },
-    { title: 'Total Revenue', value: '$0', icon: DollarSign, color: 'from-indigo-600 to-purple-600' },
-    { title: 'Analytics', value: 'View', icon: BarChart3, color: 'from-purple-600 to-pink-600' },
+    { title: 'Total Events', value: events.length, icon: Calendar, color: 'from-orange-500 to-pink-500' },
+    { title: 'Published Events', value: events.filter(e => e.status === 'published').length, icon: Users, color: 'from-pink-500 to-purple-500' },
+    { title: 'Total Revenue', value: '$0', icon: DollarSign, color: 'from-purple-500 to-orange-500' },
+    { title: 'Analytics', value: 'View', icon: BarChart3, color: 'from-orange-500 to-pink-500' },
   ];
 
   const cloudVariants = {
@@ -89,13 +91,13 @@ const OrganizerDashboard = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 text-white relative overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-white via-gray-50 to-white text-black relative overflow-hidden">
       {/* Animated Background Clouds */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <motion.div
           variants={cloudVariants}
           animate="animate"
-          className="absolute top-20 left-10 text-purple-400/10"
+          className="absolute top-20 left-10 text-orange-500/10"
         >
           <Cloud size={100} />
         </motion.div>
@@ -103,7 +105,7 @@ const OrganizerDashboard = () => {
           variants={cloudVariants}
           animate="animate"
           style={{ animationDelay: "10s" }}
-          className="absolute bottom-40 right-20 text-blue-400/10"
+          className="absolute bottom-40 right-20 text-pink-500/10"
         >
           <CloudRain size={80} />
         </motion.div>
@@ -111,7 +113,7 @@ const OrganizerDashboard = () => {
           variants={cloudVariants}
           animate="animate"
           style={{ animationDelay: "15s" }}
-          className="absolute top-60 left-1/3 text-indigo-400/10"
+          className="absolute top-60 left-1/3 text-purple-500/10"
         >
           <Cloud size={120} />
         </motion.div>
@@ -119,27 +121,27 @@ const OrganizerDashboard = () => {
 
       {/* Header */}
       <motion.div 
-        className="border-b border-purple-500/20 bg-slate-900/50 backdrop-blur-sm relative z-10"
+        className="border-b border-gray-200 bg-white/50 backdrop-blur-sm relative z-10"
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
         <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
           <div>
-            <h1 className="text-2xl font-bold bg-gradient-to-r from-white to-purple-200 bg-clip-text text-transparent">
+            <h1 className="text-2xl font-bold bg-gradient-to-r from-black to-gray-600 bg-clip-text text-transparent">
               Event Organizer Dashboard
             </h1>
-            <p className="text-purple-200">Welcome back, {profile?.full_name || user?.email}</p>
+            <p className="text-gray-600">Welcome back, {profile?.full_name || user?.email}</p>
           </div>
           <div className="flex items-center gap-4">
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-              <Button variant="outline" size="sm" className="border-purple-400/30 text-purple-200 hover:bg-purple-600/20">
+              <Button variant="outline" size="sm" className="border-gray-300 text-gray-700 hover:bg-gray-50">
                 <Settings className="w-4 h-4 mr-2" />
                 Settings
               </Button>
             </motion.div>
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-              <Button variant="outline" size="sm" onClick={handleSignOut} className="border-red-500/30 text-red-400 hover:bg-red-500/20">
+              <Button variant="outline" size="sm" onClick={handleSignOut} className="border-red-300 text-red-600 hover:bg-red-50">
                 <LogOut className="w-4 h-4 mr-2" />
                 Sign Out
               </Button>
@@ -163,12 +165,12 @@ const OrganizerDashboard = () => {
               whileHover={{ scale: 1.05, y: -5 }}
               transition={{ duration: 0.2 }}
             >
-              <Card className="bg-slate-800/50 border-purple-500/20 backdrop-blur-sm hover:bg-slate-800/70 transition-all shadow-lg shadow-purple-500/10">
+              <Card className="bg-white border border-gray-200 hover:shadow-xl transition-all shadow-lg">
                 <CardContent className="p-6">
                   <div className="flex items-center justify-between">
                     <div>
-                      <p className="text-purple-200 text-sm">{stat.title}</p>
-                      <p className="text-2xl font-bold text-white">{stat.value}</p>
+                      <p className="text-gray-600 text-sm">{stat.title}</p>
+                      <p className="text-2xl font-bold text-black">{stat.value}</p>
                     </div>
                     <motion.div 
                       className={`w-12 h-12 bg-gradient-to-r ${stat.color} rounded-lg flex items-center justify-center shadow-lg`}
@@ -192,23 +194,26 @@ const OrganizerDashboard = () => {
           transition={{ delay: 0.6 }}
         >
           <div className="flex justify-between items-center mb-6">
-            <h2 className="text-xl font-semibold bg-gradient-to-r from-white to-purple-200 bg-clip-text text-transparent">Quick Actions</h2>
+            <h2 className="text-xl font-semibold bg-gradient-to-r from-black to-gray-600 bg-clip-text text-transparent">Quick Actions</h2>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-              <Button className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 h-16 w-full shadow-lg shadow-purple-500/25 group">
+              <Button 
+                className="bg-gradient-to-r from-orange-500 to-pink-500 hover:from-orange-600 hover:to-pink-600 h-16 w-full shadow-lg shadow-orange-500/25 group"
+                onClick={() => setIsCreateModalOpen(true)}
+              >
                 <Plus className="w-5 h-5 mr-2 group-hover:rotate-90 transition-transform" />
                 Create New Event
                 <Sparkles className="w-4 h-4 ml-2 group-hover:rotate-12 transition-transform" />
               </Button>
             </motion.div>
             <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-              <Button variant="outline" className="border-purple-400/30 text-purple-200 hover:bg-purple-600/20 h-16 w-full">
+              <Button variant="outline" className="border-gray-300 text-gray-700 hover:bg-gray-50 h-16 w-full">
                 Manage Sponsors
               </Button>
             </motion.div>
             <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-              <Button variant="outline" className="border-purple-400/30 text-purple-200 hover:bg-purple-600/20 h-16 w-full">
+              <Button variant="outline" className="border-gray-300 text-gray-700 hover:bg-gray-50 h-16 w-full">
                 View Analytics
               </Button>
             </motion.div>
@@ -221,11 +226,11 @@ const OrganizerDashboard = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.8 }}
         >
-          <h2 className="text-xl font-semibold mb-6 bg-gradient-to-r from-white to-purple-200 bg-clip-text text-transparent">Your Events</h2>
+          <h2 className="text-xl font-semibold mb-6 bg-gradient-to-r from-black to-gray-600 bg-clip-text text-transparent">Your Events</h2>
           {loading ? (
             <div className="text-center py-8">
               <motion.div 
-                className="text-purple-200"
+                className="text-gray-600"
                 animate={{ opacity: [0.5, 1, 0.5] }}
                 transition={{ duration: 2, repeat: Infinity }}
               >
@@ -233,19 +238,22 @@ const OrganizerDashboard = () => {
               </motion.div>
             </div>
           ) : events.length === 0 ? (
-            <Card className="bg-slate-800/50 border-purple-500/20 backdrop-blur-sm shadow-lg shadow-purple-500/10">
+            <Card className="bg-white border border-gray-200 shadow-lg">
               <CardContent className="p-8 text-center">
                 <motion.div
                   initial={{ scale: 0 }}
                   animate={{ scale: 1 }}
                   transition={{ delay: 0.2, type: "spring" }}
                 >
-                  <Calendar className="w-16 h-16 text-purple-400 mx-auto mb-4" />
+                  <Calendar className="w-16 h-16 text-orange-500 mx-auto mb-4" />
                 </motion.div>
-                <h3 className="text-lg font-medium text-white mb-2">No events yet</h3>
-                <p className="text-purple-200 mb-6">Create your first event to get started</p>
+                <h3 className="text-lg font-medium text-black mb-2">No events yet</h3>
+                <p className="text-gray-600 mb-6">Create your first event to get started</p>
                 <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                  <Button className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 shadow-lg shadow-purple-500/25">
+                  <Button 
+                    className="bg-gradient-to-r from-orange-500 to-pink-500 hover:from-orange-600 hover:to-pink-600 shadow-lg shadow-orange-500/25"
+                    onClick={() => setIsCreateModalOpen(true)}
+                  >
                     <Plus className="w-4 h-4 mr-2" />
                     Create Event
                   </Button>
@@ -262,23 +270,23 @@ const OrganizerDashboard = () => {
                   transition={{ delay: index * 0.1 }}
                   whileHover={{ scale: 1.02, y: -5 }}
                 >
-                  <Card className="bg-slate-800/50 border-purple-500/20 backdrop-blur-sm hover:bg-slate-800/70 transition-all shadow-lg shadow-purple-500/10 h-full">
+                  <Card className="bg-white border border-gray-200 hover:shadow-xl transition-all shadow-lg h-full">
                     <CardHeader>
                       <div className="flex justify-between items-start">
-                        <CardTitle className="text-white">{event.title}</CardTitle>
+                        <CardTitle className="text-black">{event.title}</CardTitle>
                         <Badge 
                           variant={event.status === 'published' ? 'default' : 'secondary'}
-                          className={event.status === 'published' ? 'bg-green-600/20 text-green-400 border-green-500/30' : ''}
+                          className={event.status === 'published' ? 'bg-green-100 text-green-700 border-green-300' : 'bg-gray-100 text-gray-700 border-gray-300'}
                         >
                           {event.status}
                         </Badge>
                       </div>
-                      <CardDescription className="text-purple-200">
+                      <CardDescription className="text-gray-600">
                         {event.description}
                       </CardDescription>
                     </CardHeader>
                     <CardContent>
-                      <div className="space-y-2 text-sm text-purple-200">
+                      <div className="space-y-2 text-sm text-gray-600">
                         {event.event_date && (
                           <p>Date: {new Date(event.event_date).toLocaleDateString()}</p>
                         )}
@@ -293,6 +301,12 @@ const OrganizerDashboard = () => {
           )}
         </motion.div>
       </div>
+
+      <CreateEventModal 
+        isOpen={isCreateModalOpen}
+        onClose={() => setIsCreateModalOpen(false)}
+        onEventCreated={fetchEvents}
+      />
     </div>
   );
 };
