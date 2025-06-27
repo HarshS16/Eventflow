@@ -1,73 +1,133 @@
-# Welcome to your Lovable project
+---
 
-## Project info
+# 🎉 EventFlow
 
-**URL**: https://lovable.dev/projects/3ef9b937-53e1-4634-8a66-9cb06eb6890d
+> **EventFlow** is a full-stack, end-to-end event management web app that simplifies event organization by automating promotion, ticketing, communication, and participant handling — all in one platform.
 
-## How can I edit this code?
+---
 
-There are several ways of editing your application.
+## 🚀 Features
 
-**Use Lovable**
+* 🎟️ **QR-Based Ticketing System**
+  Automatic QR code generation on registration and real-time scanning at the event venue.
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/3ef9b937-53e1-4634-8a66-9cb06eb6890d) and start prompting.
+* 🧑‍💼 **Sponsor & Community Onboarding**
+  Connect with relevant sponsors and leverage communities to promote your events.
 
-Changes made via Lovable will be committed automatically to this repo.
+* 🛠️ **Organizer Admin Panel**
+  Dashboard to create events, manage guests and participants, and broadcast event updates.
 
-**Use your preferred IDE**
+* 🔔 **Notification System**
+  Email and SMS notifications to attendees for announcements, updates, or schedule changes.
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+* 🔐 **Google OAuth Login**
+  Easy sign-in with Google for attendees, sponsors, and organizers.
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+---
 
-Follow these steps:
+## 🧱 Tech Stack
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+| Layer         | Tech                                                       |
+| ------------- | ---------------------------------------------------------- |
+| Frontend      | React.js, Vite, Tailwind CSS, HTML, Zustand (state)        |
+| Backend       | Node.js, Express.js                                        |
+| Database      | PostgreSQL with Prisma ORM                                 |
+| Auth          | Google OAuth (via Passport.js or Firebase Auth)            |
+| QR Handling   | `qrcode` (backend), `html5-qrcode` (frontend scanner)      |
+| Notifications | Nodemailer, OneSignal/Twilio (for email/SMS)               |
+| Deployment    | Vercel (Frontend), Render/Railway (Backend), Supabase (DB) |
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+---
 
-# Step 3: Install the necessary dependencies.
-npm i
+## 🛠️ Setup Instructions
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/yourusername/eventflow.git
+cd eventflow
+```
+
+### 2. Install Dependencies
+
+#### Frontend
+
+```bash
+cd frontend
+npm install
+```
+
+#### Backend
+
+```bash
+cd ../backend
+npm install
+```
+
+### 3. Environment Variables
+
+Create a `.env` file in the `backend` folder:
+
+```
+GOOGLE_CLIENT_ID=your_google_client_id
+GOOGLE_CLIENT_SECRET=your_google_client_secret
+DATABASE_URL=your_postgres_db_url
+SESSION_SECRET=random_string
+```
+
+### 4. Run the App Locally
+
+#### Backend
+
+```bash
+cd backend
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+#### Frontend
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+```bash
+cd ../frontend
+npm run dev
+```
 
-**Use GitHub Codespaces**
+Visit: `http://localhost:3000`
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+---
 
-## What technologies are used for this project?
+## 📸 Screenshots
 
-This project is built with:
+> *Coming Soon: Add UI mockups of the dashboard, login page, and QR system.*
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+---
 
-## How can I deploy this project?
+## 🔒 Security & Best Practices
 
-Simply open [Lovable](https://lovable.dev/projects/3ef9b937-53e1-4634-8a66-9cb06eb6890d) and click on Share -> Publish.
+* Role-based access control for organizers, sponsors, and attendees.
+* QR codes use UUIDs and are verified securely to prevent tampering.
+* Token/session-based login protected with OAuth.
 
-## Can I connect a custom domain to my Lovable project?
+---
 
-Yes, you can!
+## ✨ Future Enhancements
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+* AI-based sponsor recommendation engine
+* Mobile app (React Native)
+* Payment gateway integration for ticket sales
+* Gamified community promotion leaderboard
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+---
+
+## 🧑‍💻 Author
+
+Built with 💡 by **Harsh Srivastava**
+
+> For collaborations, reach out at: `your_email@example.com`
+
+---
+
+## 📄 License
+
+MIT License © 2025 EventFlow
+
+---
