@@ -1,11 +1,10 @@
-
 import { useState, useEffect } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Search, Target, DollarSign, TrendingUp, Settings, LogOut, Eye, Cloud, CloudRain, Sparkles } from 'lucide-react';
+import { Search, Target, DollarSign, TrendingUp, Settings, LogOut, Eye, Cloud, CloudRain, Sparkles, Calendar, MapPin, Users } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 
@@ -13,13 +12,16 @@ const SponsorDashboard = () => {
   const { user, signOut } = useAuth();
   const navigate = useNavigate();
   const [opportunities, setOpportunities] = useState<any[]>([]);
+  const [liveEvents, setLiveEvents] = useState<any[]>([]);
   const [profile, setProfile] = useState<any>(null);
   const [loading, setLoading] = useState(true);
+  const [eventsLoading, setEventsLoading] = useState(true);
 
   useEffect(() => {
     if (user) {
       fetchProfile();
       fetchOpportunities();
+      fetchLiveEvents();
     }
   }, [user]);
 
@@ -45,6 +47,16 @@ const SponsorDashboard = () => {
     setLoading(false);
   };
 
+  const fetchLiveEvents = async () => {
+    const { data } = await supabase
+      .from('events')
+      .select('*')
+      .eq('status', 'published')
+      .order('event_date', { ascending: true });
+    setLiveEvents(data || []);
+    setEventsLoading(false);
+  };
+
   const handleSignOut = async () => {
     await signOut();
     navigate('/');
@@ -52,9 +64,9 @@ const SponsorDashboard = () => {
 
   const stats = [
     { title: 'Available Opportunities', value: opportunities.length, icon: Target, color: 'from-pink-500 to-purple-500' },
+    { title: 'Live Events', value: liveEvents.length, icon: Calendar, color: 'from-blue-500 to-cyan-500' },
     { title: 'Active Sponsorships', value: 0, icon: TrendingUp, color: 'from-purple-500 to-orange-500' },
     { title: 'Total Investment', value: '$0', icon: DollarSign, color: 'from-orange-500 to-pink-500' },
-    { title: 'ROI', value: '0%', icon: TrendingUp, color: 'from-pink-500 to-purple-500' },
   ];
 
   const cloudVariants = {
@@ -291,6 +303,105 @@ const SponsorDashboard = () => {
                               <Eye className="w-4 h-4 mr-2" />
                               View Details
                               <Sparkles className="w-4 h-4 ml-2 group-hover:rotate-12 transition-transform" />
+                            </Button>
+                          </motion.div>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </motion.div>
+              ))}
+            </div>
+          )}
+        </motion.div>
+
+        {/* Live Events Section */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 1.0 }}
+          className="mt-12"
+        >
+          <h2 className="text-xl font-semibold mb-6 bg-gradient-to-r from-black to-gray-600 bg-clip-text text-transparent">Live Events</h2>
+          {eventsLoading ? (
+            <div className="text-center py-8">
+              <motion.div 
+                className="text-gray-600"
+                animate={{ opacity: [0.5, 1, 0.5] }}
+                transition={{ duration: 2, repeat: Infinity }}
+              >
+                Loading events...
+              </motion.div>
+            </div>
+          ) : liveEvents.length === 0 ? (
+            <Card className="bg-white border border-gray-200 shadow-lg">
+              <CardContent className="p-8 text-center">
+                <motion.div
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  transition={{ delay: 0.2, type: "spring" }}
+                >
+                  <Calendar className="w-16 h-16 text-blue-500 mx-auto mb-4" />
+                </motion.div>
+                <h3 className="text-lg font-medium text-black mb-2">No live events available</h3>
+                <p className="text-gray-600">Check back later for new events</p>
+              </CardContent>
+            </Card>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {liveEvents.map((event, index) => (
+                <motion.div
+                  key={event.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.1 }}
+                  whileHover={{ scale: 1.02, y: -5 }}
+                >
+                  <Card className="bg-white border border-gray-200 hover:shadow-xl transition-all shadow-lg h-full">
+                    <CardHeader>
+                      <div className="flex justify-between items-start">
+                        <CardTitle className="text-black">{event.title}</CardTitle>
+                        <Badge className="bg-blue-100 text-blue-700 border-blue-300">
+                          {event.status}
+                        </Badge>
+                      </div>
+                      <CardDescription className="text-gray-600">
+                        {event.description?.substring(0, 100)}{event.description?.length > 100 ? '...' : ''}
+                      </CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="space-y-3">
+                        {event.event_date && (
+                          <div className="flex items-center text-sm">
+                            <Calendar className="w-4 h-4 text-gray-500 mr-2" />
+                            <span className="text-gray-600">
+                              {new Date(event.event_date).toLocaleDateString()}
+                            </span>
+                          </div>
+                        )}
+                        {event.location && (
+                          <div className="flex items-center text-sm">
+                            <MapPin className="w-4 h-4 text-gray-500 mr-2" />
+                            <span className="text-gray-600">{event.location}</span>
+                          </div>
+                        )}
+                        {event.ticket_price && (
+                          <div className="flex items-center text-sm">
+                            <DollarSign className="w-4 h-4 text-gray-500 mr-2" />
+                            <span className="text-green-600 font-medium">
+                              ${event.ticket_price}
+                            </span>
+                          </div>
+                        )}
+                        <div className="pt-3">
+                          <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+                            <Button 
+                              variant="outline" 
+                              className="w-full border-gray-300 text-gray-700 hover:bg-gray-50"
+                              onClick={() => navigate(`/event/${event.id}`)}
+                            >
+                              <Eye className="w-4 h-4 mr-2" />
+                              View Event
                             </Button>
                           </motion.div>
                         </div>
