@@ -1,13 +1,13 @@
 # Supabase Setup Guide
 
-This guide will help you set up a new Supabase project for the EventFlow application.
+This guide will help you set up a new Supabase project for the Rheo application.
 
 ## Step 1: Create a New Supabase Project
 
 1. Go to [https://supabase.com](https://supabase.com)
 2. Click "Start your project" or "New Project"
 3. Enter your project details:
-   - Project name: EventFlow
+   - Project name: Rheo
    - Database password: Set a strong password and save it somewhere secure
    - Region: Choose the region closest to your users
 4. Click "Create new project"

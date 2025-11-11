@@ -53,14 +53,14 @@ const Index = () => {
       name: "Sarah Johnson",
       role: "Event Organizer",
       company: "TechCorp Events",
-      quote: "EventFlow transformed how we manage our conferences. The sponsor matching feature alone saved us months of outreach.",
+      quote: "Rheo transformed how we manage our conferences. The sponsor matching feature alone saved us months of outreach.",
       rating: 5
     },
     {
       name: "Michael Chen",
       role: "Marketing Director",
       company: "BrandMax",
-      quote: "We've found incredible partnership opportunities through EventFlow. The platform makes it easy to track our ROI.",
+      quote: "We've found incredible partnership opportunities through Rheo. The platform makes it easy to track our ROI.",
       rating: 5
     },
     {
@@ -161,7 +161,7 @@ const Index = () => {
               </motion.div>
               
               <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-black via-gray-800 to-gray-600 bg-clip-text text-transparent">
-                EventFlow
+                Rheo
               </h1>
               <p className="text-xl md:text-2xl text-gray-600 mb-8 max-w-3xl mx-auto leading-relaxed">
                 The complete platform connecting organizers, sponsors, and communities for seamless event management and meaningful partnerships.
@@ -211,7 +211,7 @@ const Index = () => {
                 Built for Everyone
               </h2>
               <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-                Whether you're organizing events, seeking sponsorships, or building community connections, EventFlow has the tools you need.
+                Whether you're organizing events, seeking sponsorships, or building community connections, Rheo has the tools you need.
               </p>
             </motion.div>
 
@@ -329,7 +329,7 @@ const Index = () => {
                 Loved by Teams
               </h2>
               <p className="text-xl text-gray-600">
-                See what our users have to say about EventFlow
+                See what our users have to say about Rheo
               </p>
             </motion.div>
 
@@ -390,7 +390,7 @@ const Index = () => {
               Ready to Get Started?
             </h2>
             <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
-              Join thousands of event organizers, sponsors, and community partners who are already using EventFlow to create amazing experiences.
+              Join thousands of event organizers, sponsors, and community partners who are already using Rheo to create amazing experiences.
             </p>
             <motion.div 
               className="flex flex-col sm:flex-row gap-4 justify-center"

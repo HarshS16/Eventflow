@@ -43,7 +43,7 @@ const CommunitySignup = () => {
 
         toast({
           title: "Account Created!",
-          description: "Welcome to EventFlow! Start monetizing your community engagement.",
+          description: "Welcome to Rheo! Start monetizing your community engagement.",
         });
         navigate("/community/dashboard");
       }

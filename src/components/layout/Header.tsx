@@ -69,7 +69,7 @@ const Header = () => {
             >
               <div className="w-8 h-8 bg-gradient-to-r from-orange-500 to-pink-500 rounded-lg shadow-lg" />
               <span className="text-xl font-bold bg-gradient-to-r from-black to-gray-600 bg-clip-text text-transparent">
-                EventFlow
+                Rheo
               </span>
             </motion.div>
 

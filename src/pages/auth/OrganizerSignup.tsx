@@ -43,7 +43,7 @@ const OrganizerSignup = () => {
 
         toast({
           title: "Account Created!",
-          description: "Welcome to EventFlow! Please check your email to verify your account.",
+          description: "Welcome to Rheo! Please check your email to verify your account.",
         });
         navigate("/organizer/dashboard");
       }

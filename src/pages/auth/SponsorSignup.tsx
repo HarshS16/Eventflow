@@ -43,7 +43,7 @@ const SponsorSignup = () => {
 
         toast({
           title: "Account Created!",
-          description: "Welcome to EventFlow! Start discovering sponsorship opportunities.",
+          description: "Welcome to Rheo! Start discovering sponsorship opportunities.",
         });
         navigate("/sponsor/dashboard");
       }

@@ -41,7 +41,7 @@ const Footer = () => {
   ];
 
   const contactInfo = [
-    { icon: Mail, text: 'hello@eventflow.com' },
+    { icon: Mail, text: 'hello@rheo.com' },
     { icon: Phone, text: '+1 (555) 123-4567' },
     { icon: MapPin, text: 'San Francisco, CA' },
   ];
@@ -59,7 +59,7 @@ const Footer = () => {
             >
               <div className="w-8 h-8 bg-gradient-to-r from-orange-500 to-pink-500 rounded-lg shadow-lg" />
               <span className="text-xl font-bold bg-gradient-to-r from-black to-gray-600 bg-clip-text text-transparent">
-                EventFlow
+                Rheo
               </span>
             </motion.div>
             <p className="text-gray-600 mb-6 max-w-md">
@@ -159,7 +159,7 @@ const Footer = () => {
           <div className="flex flex-col md:flex-row items-center justify-between">
             <div className="mb-4 md:mb-0">
               <h3 className="text-black font-semibold mb-2">Stay Updated</h3>
-              <p className="text-gray-600 text-sm">Get the latest news and updates from EventFlow</p>
+              <p className="text-gray-600 text-sm">Get the latest news and updates from Rheo</p>
             </div>
             <div className="flex space-x-3 w-full md:w-auto">
               <input
@@ -189,7 +189,7 @@ const Footer = () => {
               >
                 <Heart className="w-4 h-4 text-red-500 fill-current" />
               </motion.div>
-              <span>by the EventFlow team</span>
+              <span>by the Rheo team</span>
             </div>
             
             <div className="flex items-center space-x-6 text-sm">
@@ -208,7 +208,7 @@ const Footer = () => {
           
           <div className="text-center mt-6 pt-6 border-t border-gray-200">
             <p className="text-gray-500 text-sm">
-              © {new Date().getFullYear()} EventFlow. All rights reserved.
+              © {new Date().getFullYear()} Rheo. All rights reserved.
             </p>
           </div>
         </div>
