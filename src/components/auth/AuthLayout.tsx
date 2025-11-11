@@ -8,7 +8,7 @@ interface AuthLayoutProps {
   children: React.ReactNode;
   title: string;
   subtitle: string;
-  userType: "organizer" | "sponsor" | "community";
+  userType: "organizer" | "sponsor" | "community" | "participant";
 }
 
 const AuthLayout = ({ children, title, subtitle, userType }: AuthLayoutProps) => {
@@ -17,7 +17,8 @@ const AuthLayout = ({ children, title, subtitle, userType }: AuthLayoutProps) =>
   const gradients = {
     organizer: "from-orange-500 to-pink-500",
     sponsor: "from-pink-500 to-orange-500",
-    community: "from-orange-500 to-pink-500"
+    community: "from-orange-500 to-pink-500",
+    participant: "from-orange-500 to-pink-500"
   };
 
   const cloudVariants = {

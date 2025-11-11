@@ -12,6 +12,7 @@ interface EventRegistrationFormProps {
   eventTitle: string;
   isOpen: boolean;
   onClose: () => void;
+  onRegistrationSuccess?: () => void;
 }
 
 const EventRegistrationForm = ({ eventId, eventTitle, isOpen, onClose }: EventRegistrationFormProps) => {
@@ -78,6 +79,11 @@ const EventRegistrationForm = ({ eventId, eventTitle, isOpen, onClose }: EventRe
         company: '',
         message: ''
       });
+
+      // Call the success callback if provided
+      if (onRegistrationSuccess) {
+        onRegistrationSuccess();
+      }
     } catch (error: any) {
       console.error('Error registering for event:', error);
       toast({

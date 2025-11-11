@@ -17,6 +17,9 @@ import CommunityLogin from "./pages/auth/CommunityLogin";
 import OrganizerDashboard from "./pages/dashboard/OrganizerDashboard";
 import SponsorDashboard from "./pages/dashboard/SponsorDashboard";
 import CommunityDashboard from "./pages/dashboard/CommunityDashboard";
+import ParticipantSignup from "./pages/auth/ParticipantSignup";
+import ParticipantLogin from "./pages/auth/ParticipantLogin";
+import ParticipantDashboard from "./pages/dashboard/ParticipantDashboard";
 
 const queryClient = new QueryClient();
 
@@ -36,6 +39,8 @@ const App = () => (
             <Route path="/sponsor/login" element={<SponsorLogin />} />
             <Route path="/community/signup" element={<CommunitySignup />} />
             <Route path="/community/login" element={<CommunityLogin />} />
+            <Route path="/participant/signup" element={<ParticipantSignup />} />
+            <Route path="/participant/login" element={<ParticipantLogin />} />
             <Route 
               path="/organizer/dashboard" 
               element={
@@ -57,6 +62,14 @@ const App = () => (
               element={
                 <ProtectedRoute>
                   <CommunityDashboard />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="/participant/dashboard" 
+              element={
+                <ProtectedRoute>
+                  <ParticipantDashboard />
                 </ProtectedRoute>
               } 
             />

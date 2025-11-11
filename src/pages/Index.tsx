@@ -36,6 +36,15 @@ const Index = () => {
       features: ["Community Events", "Local Networking", "Resource Sharing", "Impact Measurement"],
       cta: "Join Community",
       href: "/community/signup"
+    },
+    {
+      title: "Event Participants",
+      description: "Discover and register for events that match your interests and connect with communities.",
+      icon: Users,
+      color: "from-orange-500 to-pink-500",
+      features: ["Event Discovery", "Easy Registration", "Personal Dashboard", "Community Connections"],
+      cta: "Explore Events",
+      href: "/participant/signup"
     }
   ];
 
@@ -190,6 +199,16 @@ const Index = () => {
                     className="border-gray-300 text-gray-700 hover:bg-gray-50 px-8 py-4 text-lg"
                   >
                     Watch Demo
+                  </Button>
+                </motion.div>
+                <motion.div variants={itemVariants} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                  <Button 
+                    variant="outline" 
+                    size="lg"
+                    className="border-gray-300 text-gray-700 hover:bg-gray-50 px-8 py-4 text-lg"
+                    onClick={() => navigate("/participant/login")}
+                  >
+                    Participant Login
                   </Button>
                 </motion.div>
               </motion.div>
@@ -406,6 +425,16 @@ const Index = () => {
                 >
                   Start Free Trial
                   <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                </Button>
+              </motion.div>
+              <motion.div variants={itemVariants} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                <Button 
+                  variant="outline" 
+                  size="lg"
+                  className="border-gray-300 text-gray-700 hover:bg-gray-50 px-8 py-4 text-lg"
+                  onClick={() => navigate("/participant/login")}
+                >
+                  Participant Login
                 </Button>
               </motion.div>
               <motion.div variants={itemVariants} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
