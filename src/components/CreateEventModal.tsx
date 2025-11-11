@@ -58,6 +58,23 @@ const CreateEventModal = ({ isOpen, onClose, onEventCreated }: CreateEventModalP
 
     setLoading(true);
     try {
+      // Check if user has a profile
+      const { data: profileData, error: profileError } = await supabase
+        .from('profiles')
+        .select('id')
+        .eq('id', user.id)
+        .single();
+
+      if (profileError || !profileData) {
+        toast({
+          title: "Error",
+          description: "User profile not found. Please contact support.",
+          variant: "destructive"
+        });
+        setLoading(false);
+        return;
+      }
+
       const eventData = {
         title: formData.title.trim(),
         description: formData.description.trim() || null,
@@ -102,11 +119,21 @@ const CreateEventModal = ({ isOpen, onClose, onEventCreated }: CreateEventModalP
       });
     } catch (error: any) {
       console.error('Error creating event:', error);
-      toast({
-        title: "Error",
-        description: error.message || "Failed to create event. Please try again.",
-        variant: "destructive"
-      });
+      
+      // Handle specific foreign key constraint error
+      if (error.code === '23503') {
+        toast({
+          title: "Error",
+          description: "Unable to create event. Please make sure your profile is properly set up and try again.",
+          variant: "destructive"
+        });
+      } else {
+        toast({
+          title: "Error",
+          description: error.message || "Failed to create event. Please try again.",
+          variant: "destructive"
+        });
+      }
     } finally {
       setLoading(false);
     }

@@ -36,10 +36,18 @@ const OrganizerSignup = () => {
       if (error) throw error;
 
       if (data.user) {
-        await supabase.from('profiles').update({
+        // Create the user profile
+        const { error: profileError } = await supabase.from('profiles').insert({
+          id: data.user.id,
           user_type: 'organizer',
-          full_name: fullName
-        }).eq('id', data.user.id);
+          full_name: fullName,
+          email: email
+        });
+
+        if (profileError) {
+          console.error('Error creating profile:', profileError);
+          throw profileError;
+        }
 
         toast({
           title: "Account Created!",
