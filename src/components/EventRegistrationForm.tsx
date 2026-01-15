@@ -15,7 +15,7 @@ interface EventRegistrationFormProps {
   onRegistrationSuccess?: () => void;
 }
 
-const EventRegistrationForm = ({ eventId, eventTitle, isOpen, onClose }: EventRegistrationFormProps) => {
+const EventRegistrationForm = ({ eventId, eventTitle, isOpen, onClose, onRegistrationSuccess }: EventRegistrationFormProps) => {
   const { toast } = useToast();
   const [formData, setFormData] = useState({
     full_name: '',
