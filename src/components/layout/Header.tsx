@@ -27,10 +27,10 @@ const Header = () => {
   };
 
   const navItems = [
-    { label: 'Home', href: '/', public: true },
-    { label: 'Events', href: '/events', public: true },
-    { label: 'About', href: '/about', public: true },
-    { label: 'Contact', href: '/contact', public: true },
+    { label: 'Home', href: '/#home', public: true },
+    { label: 'Events', href: '/#events', public: true },
+    { label: 'About', href: '/#about', public: true },
+    { label: 'Contact', href: '/#contact', public: true },
   ];
 
   const authItems = [
@@ -81,6 +81,19 @@ const Header = () => {
                   href={item.href}
                   className="text-gray-700 hover:text-black transition-colors relative group"
                   whileHover={{ y: -2 }}
+                  onClick={(e) => {
+                    // Smooth scroll for in-page sections
+                    if (item.href.startsWith('/#')) {
+                      e.preventDefault();
+                      const id = item.href.split('#')[1];
+                      const el = document.getElementById(id);
+                      if (el) {
+                        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                      } else {
+                        navigate('/');
+                      }
+                    }
+                  }}
                 >
                   {item.label}
                   <motion.div
@@ -219,8 +232,20 @@ const Header = () => {
                       key={item.label}
                       href={item.href}
                       className="block text-gray-700 hover:text-black transition-colors"
-                      onClick={() => setIsMenuOpen(false)}
                       whileHover={{ x: 5 }}
+                      onClick={(e) => {
+                        if (item.href.startsWith('/#')) {
+                          e.preventDefault();
+                          const id = item.href.split('#')[1];
+                          const el = document.getElementById(id);
+                          if (el) {
+                            el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                          } else {
+                            navigate('/');
+                          }
+                        }
+                        setIsMenuOpen(false);
+                      }}
                     >
                       {item.label}
                     </motion.a>

@@ -1,13 +1,20 @@
 
+import { useState } from "react";
 import { motion } from "framer-motion";
-import { ArrowRight, Users, Target, Globe, CheckCircle, Star, Cloud, CloudRain, Sparkles } from "lucide-react";
+import { ArrowRight, Users, Target, Globe, CheckCircle, Star, Cloud, CloudRain, Sparkles, Box, Zap, BarChart3, CreditCard, MessageCircle, Headphones } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { useNavigate } from "react-router-dom";
 import Layout from "@/components/layout/Layout";
+import ContactModal from "@/components/ContactModal";
+import { GlowingEffect } from "@/components/ui/glowing-effect";
+import { StaggerTestimonials } from "@/components/ui/stagger-testimonials";
+import { MagicCard } from "@/components/ui/magic-card";
+import { cn } from "@/lib/utils";
 
 const Index = () => {
   const navigate = useNavigate();
+  const [isContactModalOpen, setIsContactModalOpen] = useState(false);
 
   const userTypes = [
     {
@@ -49,35 +56,41 @@ const Index = () => {
   ];
 
   const features = [
-    "End-to-end event management platform",
-    "AI-powered sponsor matching",
-    "Real-time analytics and insights",
-    "Integrated payment processing",
-    "Community engagement tools",
-    "24/7 customer support"
-  ];
-
-  const testimonials = [
     {
-      name: "Sarah Johnson",
-      role: "Event Organizer",
-      company: "TechCorp Events",
-      quote: "Rheo transformed how we manage our conferences. The sponsor matching feature alone saved us months of outreach.",
-      rating: 5
+      title: "End-to-end event management",
+      description: "Comprehensive platform for managing every aspect of your events from planning to execution.",
+      icon: Box,
+      area: "md:[grid-area:1/1/2/7] xl:[grid-area:1/1/2/5]"
     },
     {
-      name: "Michael Chen",
-      role: "Marketing Director",
-      company: "BrandMax",
-      quote: "We've found incredible partnership opportunities through Rheo. The platform makes it easy to track our ROI.",
-      rating: 5
+      title: "AI-powered sponsor matching",
+      description: "Smart algorithms connect you with the perfect sponsors aligned with your event goals.",
+      icon: Zap,
+      area: "md:[grid-area:1/7/2/13] xl:[grid-area:2/1/3/5]"
     },
     {
-      name: "Emily Rodriguez",
-      role: "Community Manager",
-      company: "Local Impact",
-      quote: "The community features help us amplify local events and create meaningful connections in our neighborhood.",
-      rating: 5
+      title: "Real-time analytics",
+      description: "Track performance metrics and gain insights to optimize your event success.",
+      icon: BarChart3,
+      area: "md:[grid-area:2/1/3/7] xl:[grid-area:1/5/3/8]"
+    },
+    {
+      title: "Integrated payments",
+      description: "Seamless payment processing with multiple gateways and instant settlements.",
+      icon: CreditCard,
+      area: "md:[grid-area:2/7/3/13] xl:[grid-area:1/8/2/13]"
+    },
+    {
+      title: "Community engagement",
+      description: "Build stronger connections with attendees through interactive tools and features.",
+      icon: MessageCircle,
+      area: "md:[grid-area:3/1/4/7] xl:[grid-area:2/8/3/10]"
+    },
+    {
+      title: "24/7 support",
+      description: "Always-available customer support team ready to help you succeed.",
+      icon: Headphones,
+      area: "md:[grid-area:3/7/4/13] xl:[grid-area:2/10/3/13]"
     }
   ];
 
@@ -154,8 +167,8 @@ const Index = () => {
         </div>
 
         {/* Hero Section */}
-        <section className="relative z-10 py-20 px-6">
-          <div className="max-w-6xl mx-auto text-center">
+        <section id="home" className="relative z-10 py-20 px-3">
+          <div className="max-w-[1600px] mx-auto text-center">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
@@ -192,7 +205,7 @@ const Index = () => {
                     <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
                   </Button>
                 </motion.div>
-                <motion.div variants={itemVariants} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                {/* <motion.div variants={itemVariants} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                   <Button 
                     variant="outline" 
                     size="lg"
@@ -200,8 +213,8 @@ const Index = () => {
                   >
                     Watch Demo
                   </Button>
-                </motion.div>
-                <motion.div variants={itemVariants} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                </motion.div> */}
+                {/* <motion.div variants={itemVariants} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                   <Button 
                     variant="outline" 
                     size="lg"
@@ -210,15 +223,15 @@ const Index = () => {
                   >
                     Participant Login
                   </Button>
-                </motion.div>
+                </motion.div> */}
               </motion.div>
             </motion.div>
           </div>
         </section>
 
-        {/* User Types Section */}
-        <section className="relative z-10 py-20 px-6">
-          <div className="max-w-7xl mx-auto">
+        {/* Events Section */}
+        <section id="events" className="relative z-10 py-20 px-3">
+          <div className="max-w-[1600px] mx-auto">
             <motion.div 
               className="text-center mb-16"
               initial={{ opacity: 0, y: 20 }}
@@ -227,15 +240,15 @@ const Index = () => {
               viewport={{ once: true }}
             >
               <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-black to-gray-600 bg-clip-text text-transparent">
-                Built for Everyone
+                Explore Events & Roles
               </h2>
               <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-                Whether you're organizing events, seeking sponsorships, or building community connections, Rheo has the tools you need.
+                Whether you're organizing, sponsoring, partnering, or participating — jump into the right experience.
               </p>
             </motion.div>
 
             <motion.div 
-              className="grid grid-cols-1 md:grid-cols-3 gap-8"
+              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8"
               variants={containerVariants}
               initial="hidden"
               whileInView="visible"
@@ -248,45 +261,52 @@ const Index = () => {
                   whileHover={{ scale: 1.02, y: -10 }}
                   transition={{ duration: 0.3 }}
                 >
-                  <Card className="bg-white border border-gray-200 hover:shadow-xl transition-all h-full shadow-lg">
-                    <CardHeader className="text-center pb-4">
-                      <motion.div 
-                        className={`w-16 h-16 bg-gradient-to-r ${type.color} rounded-xl mx-auto mb-4 flex items-center justify-center shadow-lg`}
-                        whileHover={{ rotate: 360 }}
-                        transition={{ duration: 0.5 }}
-                      >
-                        <type.icon className="w-8 h-8 text-white" />
-                      </motion.div>
-                      <CardTitle className="text-2xl text-black mb-2">{type.title}</CardTitle>
-                      <CardDescription className="text-gray-600 text-base">
-                        {type.description}
-                      </CardDescription>
-                    </CardHeader>
-                    <CardContent className="space-y-6">
-                      <ul className="space-y-3">
-                        {type.features.map((feature, idx) => (
-                          <motion.li 
-                            key={idx} 
-                            className="flex items-center text-gray-700"
-                            initial={{ opacity: 0, x: -10 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            transition={{ delay: idx * 0.1 }}
-                          >
-                            <CheckCircle className="w-5 h-5 text-green-500 mr-3 flex-shrink-0" />
-                            {feature}
-                          </motion.li>
-                        ))}
-                      </ul>
-                      <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                        <Button 
-                          className={`w-full bg-gradient-to-r ${type.color} hover:opacity-90 text-white shadow-lg`}
-                          onClick={() => navigate(type.href)}
+                  <Card className="w-full border-none p-0 shadow-none h-full">
+                    <MagicCard
+                      gradientColor={index % 2 === 0 ? "rgba(251, 146, 60, 0.3)" : "rgba(236, 72, 153, 0.3)"}
+                      gradientSize={300}
+                      gradientOpacity={0.6}
+                      className="bg-white border border-gray-200 hover:shadow-2xl transition-all h-full shadow-lg"
+                    >
+                      <CardHeader className="text-center pb-4 border-b border-gray-100">
+                        <motion.div 
+                          className={`w-16 h-16 bg-gradient-to-r ${type.color} rounded-xl mx-auto mb-4 flex items-center justify-center shadow-lg`}
+                          whileHover={{ rotate: 360 }}
+                          transition={{ duration: 0.5 }}
                         >
-                          {type.cta}
-                          <ArrowRight className="ml-2 w-4 h-4" />
-                        </Button>
-                      </motion.div>
-                    </CardContent>
+                          <type.icon className="w-8 h-8 text-white" />
+                        </motion.div>
+                        <CardTitle className="text-2xl text-black mb-2">{type.title}</CardTitle>
+                        <CardDescription className="text-gray-600 text-base">
+                          {type.description}
+                        </CardDescription>
+                      </CardHeader>
+                      <CardContent className="space-y-6 pt-6">
+                        <ul className="space-y-3">
+                          {type.features.map((feature, idx) => (
+                            <motion.li 
+                              key={idx} 
+                              className="flex items-center text-gray-700"
+                              initial={{ opacity: 0, x: -10 }}
+                              whileInView={{ opacity: 1, x: 0 }}
+                              transition={{ delay: idx * 0.1 }}
+                            >
+                              <CheckCircle className="w-5 h-5 text-green-500 mr-3 flex-shrink-0" />
+                              {feature}
+                            </motion.li>
+                          ))}
+                        </ul>
+                        <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                          <Button 
+                            className={`w-full bg-gradient-to-r ${type.color} hover:opacity-90 text-white shadow-lg`}
+                            onClick={() => navigate(type.href)}
+                          >
+                            {type.cta}
+                            <ArrowRight className="ml-2 w-4 h-4" />
+                          </Button>
+                        </motion.div>
+                      </CardContent>
+                    </MagicCard>
                   </Card>
                 </motion.div>
               ))}
@@ -294,9 +314,9 @@ const Index = () => {
           </div>
         </section>
 
-        {/* Features Section */}
-        <section className="relative z-10 py-20 px-6 bg-gray-50">
-          <div className="max-w-6xl mx-auto">
+        {/* About Section */}
+        <section id="about" className="relative z-10 py-20 px-3 bg-[#fafafa]">
+          <div className="max-w-[1600px] mx-auto">
             <motion.div 
               className="text-center mb-16"
               initial={{ opacity: 0, y: 20 }}
@@ -305,38 +325,63 @@ const Index = () => {
               viewport={{ once: true }}
             >
               <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-black to-gray-600 bg-clip-text text-transparent">
-                Everything You Need
+                About Rheo
               </h2>
               <p className="text-xl text-gray-600">
-                Powerful features designed to streamline your event management workflow
+                Rheo brings organizers, sponsors, and communities together with streamlined tools and meaningful insights.
               </p>
             </motion.div>
 
-            <motion.div 
-              className="grid grid-cols-1 md:grid-cols-2 gap-4"
-              variants={containerVariants}
-              initial="hidden"
-              whileInView="visible"
+            <motion.ul 
+              className="grid grid-cols-1 grid-rows-none gap-4 md:grid-cols-12 md:grid-rows-3 lg:gap-4 xl:grid-rows-2"
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              transition={{ duration: 0.8 }}
               viewport={{ once: true }}
             >
               {features.map((feature, index) => (
-                <motion.div
+                <motion.li 
                   key={index}
-                  variants={itemVariants}
-                  whileHover={{ scale: 1.02, x: 10 }}
-                  className="flex items-center space-x-3 p-4 bg-white border border-gray-200 rounded-lg shadow-sm"
+                  className={cn("min-h-[14rem] list-none", feature.area)}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  viewport={{ once: true }}
                 >
-                  <CheckCircle className="w-6 h-6 text-green-500 flex-shrink-0" />
-                  <span className="text-gray-700 text-lg">{feature}</span>
-                </motion.div>
+                  <div className="relative h-full rounded-[1.25rem] border-[0.75px] border-gray-300/50 p-2 md:rounded-[1.5rem] md:p-3">
+                    <GlowingEffect
+                      spread={40}
+                      glow={true}
+                      disabled={false}
+                      proximity={64}
+                      inactiveZone={0.01}
+                      borderWidth={3}
+                    />
+                    <div className="relative flex h-full flex-col justify-between gap-6 overflow-hidden rounded-xl border-[0.75px] border-gray-300/50 bg-white p-6 shadow-sm dark:shadow-[0px_0px_27px_0px_rgba(45,45,45,0.3)] md:p-6">
+                      <div className="relative flex flex-1 flex-col justify-between gap-3">
+                        <div className="w-fit rounded-lg border-[0.75px] border-gray-300/50 bg-gray-100 p-2">
+                          <feature.icon className="h-4 w-4 text-gray-700" />
+                        </div>
+                        <div className="space-y-3">
+                          <h3 className="pt-0.5 text-xl leading-[1.375rem] font-semibold font-sans tracking-[-0.04em] md:text-2xl md:leading-[1.875rem] text-balance text-gray-900">
+                            {feature.title}
+                          </h3>
+                          <p className="font-sans text-sm leading-[1.125rem] md:text-base md:leading-[1.375rem] text-gray-600">
+                            {feature.description}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </motion.li>
               ))}
-            </motion.div>
+            </motion.ul>
           </div>
         </section>
 
         {/* Testimonials Section */}
-        <section className="relative z-10 py-20 px-6">
-          <div className="max-w-7xl mx-auto">
+        <section className="relative z-10 py-20 px-3">
+          <div className="max-w-[1600px] mx-auto">
             <motion.div 
               className="text-center mb-16"
               initial={{ opacity: 0, y: 20 }}
@@ -352,44 +397,19 @@ const Index = () => {
               </p>
             </motion.div>
 
-            <motion.div 
-              className="grid grid-cols-1 md:grid-cols-3 gap-8"
-              variants={containerVariants}
-              initial="hidden"
-              whileInView="visible"
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
               viewport={{ once: true }}
             >
-              {testimonials.map((testimonial, index) => (
-                <motion.div
-                  key={index}
-                  variants={itemVariants}
-                  whileHover={{ scale: 1.02, y: -5 }}
-                >
-                  <Card className="bg-white border border-gray-200 h-full shadow-lg">
-                    <CardContent className="p-6">
-                      <div className="flex mb-4">
-                        {[...Array(testimonial.rating)].map((_, i) => (
-                          <Star key={i} className="w-5 h-5 text-yellow-400 fill-current" />
-                        ))}
-                      </div>
-                      <blockquote className="text-gray-700 mb-4 italic">
-                        "{testimonial.quote}"
-                      </blockquote>
-                      <div>
-                        <div className="font-semibold text-black">{testimonial.name}</div>
-                        <div className="text-gray-600 text-sm">{testimonial.role}</div>
-                        <div className="text-gray-500 text-sm">{testimonial.company}</div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                </motion.div>
-              ))}
+              <StaggerTestimonials />
             </motion.div>
           </div>
         </section>
 
-        {/* CTA Section */}
-        <section className="relative z-10 py-20 px-6">
+        {/* Contact Section */}
+        <section id="contact" className="relative z-10 py-20 px-3">
           <motion.div 
             className="max-w-4xl mx-auto text-center bg-white border border-gray-200 rounded-2xl p-12 shadow-2xl"
             initial={{ opacity: 0, scale: 0.95 }}
@@ -406,10 +426,10 @@ const Index = () => {
               <Sparkles className="w-16 h-16 text-orange-500" />
             </motion.div>
             <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-black to-gray-600 bg-clip-text text-transparent">
-              Ready to Get Started?
+              Contact Us
             </h2>
             <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
-              Join thousands of event organizers, sponsors, and community partners who are already using Rheo to create amazing experiences.
+              Questions or partnerships? Reach out — we’d love to help you create amazing events.
             </p>
             <motion.div 
               className="flex flex-col sm:flex-row gap-4 justify-center"
@@ -421,35 +441,20 @@ const Index = () => {
                 <Button 
                   size="lg" 
                   className="bg-gradient-to-r from-orange-500 to-pink-500 hover:from-orange-600 hover:to-pink-600 text-white px-8 py-4 text-lg shadow-2xl shadow-orange-500/25 group"
-                  onClick={() => navigate("/organizer/signup")}
+                  onClick={() => setIsContactModalOpen(true)}
                 >
-                  Start Free Trial
+                  Contact Us
                   <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                </Button>
-              </motion.div>
-              <motion.div variants={itemVariants} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                <Button 
-                  variant="outline" 
-                  size="lg"
-                  className="border-gray-300 text-gray-700 hover:bg-gray-50 px-8 py-4 text-lg"
-                  onClick={() => navigate("/participant/login")}
-                >
-                  Participant Login
-                </Button>
-              </motion.div>
-              <motion.div variants={itemVariants} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                <Button 
-                  variant="outline" 
-                  size="lg"
-                  className="border-gray-300 text-gray-700 hover:bg-gray-50 px-8 py-4 text-lg"
-                >
-                  Contact Sales
                 </Button>
               </motion.div>
             </motion.div>
           </motion.div>
         </section>
       </div>
+      <ContactModal 
+        isOpen={isContactModalOpen} 
+        onClose={() => setIsContactModalOpen(false)} 
+      />
     </Layout>
   );
 };

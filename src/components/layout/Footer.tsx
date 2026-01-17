@@ -35,15 +35,15 @@ const Footer = () => {
 
   const socialLinks = [
     { icon: Facebook, href: 'https://facebook.com', label: 'Facebook' },
-    { icon: Twitter, href: 'https://twitter.com', label: 'Twitter' },
+    { icon: Twitter, href: 'https://x.com/HarshSr69382182', label: 'Twitter' },
     { icon: Instagram, href: 'https://instagram.com', label: 'Instagram' },
-    { icon: Linkedin, href: 'https://linkedin.com', label: 'LinkedIn' },
+    { icon: Linkedin, href: 'https://www.linkedin.com/in/harsh-tsx/', label: 'LinkedIn' },
   ];
 
   const contactInfo = [
-    { icon: Mail, text: 'hello@rheo.com' },
+    { icon: Mail, text: 'harshme08@gmail.com' },
     { icon: Phone, text: '+1 (555) 123-4567' },
-    { icon: MapPin, text: 'San Francisco, CA' },
+    { icon: MapPin, text: 'Delhi, India' },
   ];
 
   return (
