@@ -7,6 +7,7 @@ import { AuthProvider } from "@/contexts/AuthContext";
 import ProtectedRoute from "@/components/ProtectedRoute";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
+import ComingSoon from "./pages/ComingSoon";
 import EventPage from "./pages/EventPage";
 import OrganizerSignup from "./pages/auth/OrganizerSignup";
 import OrganizerLogin from "./pages/auth/OrganizerLogin";
@@ -73,6 +74,20 @@ const App = () => (
                 </ProtectedRoute>
               } 
             />
+            <Route path="/coming-soon" element={<ComingSoon />} />
+            <Route path="/pricing" element={<ComingSoon />} />
+            <Route path="/about" element={<ComingSoon />} />
+            <Route path="/careers" element={<ComingSoon />} />
+            <Route path="/press" element={<ComingSoon />} />
+            <Route path="/contact" element={<ComingSoon />} />
+            <Route path="/help" element={<ComingSoon />} />
+            <Route path="/docs" element={<ComingSoon />} />
+            <Route path="/api" element={<ComingSoon />} />
+            <Route path="/blog" element={<ComingSoon />} />
+            <Route path="/privacy" element={<ComingSoon />} />
+            <Route path="/terms" element={<ComingSoon />} />
+            <Route path="/cookies" element={<ComingSoon />} />
+            <Route path="/security" element={<ComingSoon />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
