@@ -1,10 +1,15 @@
 
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Heart, Mail, Phone, MapPin, Facebook, Twitter, Instagram, Linkedin } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { useToast } from '@/hooks/use-toast';
 
 const Footer = () => {
   const navigate = useNavigate();
+  const { toast } = useToast();
+  const [email, setEmail] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const footerLinks = {
     platform: [
@@ -45,6 +50,54 @@ const Footer = () => {
     { icon: Phone, text: '+1 (555) 123-4567' },
     { icon: MapPin, text: 'Delhi, India' },
   ];
+
+  const handleNewsletterSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (!email) {
+      toast({
+        title: "Email required",
+        description: "Please enter your email address.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    try {
+      const response = await fetch("https://submit-form.com/vQ6drlCwO", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          name: "Newsletter Subscriber",
+          email: email,
+          message: "Newsletter subscription request"
+        }),
+      });
+
+      if (response.ok) {
+        toast({
+          title: "Subscribed!",
+          description: "Thank you for subscribing to our newsletter.",
+        });
+        setEmail('');
+      } else {
+        throw new Error("Failed to subscribe");
+      }
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to subscribe. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   return (
     <footer className="bg-gray-50 border-t border-gray-200 text-gray-900">
@@ -156,26 +209,34 @@ const Footer = () => {
           className="bg-white border border-gray-200 rounded-xl p-6 mb-8 shadow-sm"
           whileHover={{ scale: 1.02 }}
         >
-          <div className="flex flex-col md:flex-row items-center justify-between">
-            <div className="mb-4 md:mb-0">
-              <h3 className="text-black font-semibold mb-2">Stay Updated</h3>
-              <p className="text-gray-600 text-sm">Get the latest news and updates from Rheo</p>
+          <form onSubmit={handleNewsletterSubmit}>
+            <div className="flex flex-col md:flex-row items-center justify-between">
+              <div className="mb-4 md:mb-0">
+                <h3 className="text-black font-semibold mb-2">Stay Updated</h3>
+                <p className="text-gray-600 text-sm">Get the latest news and updates from Rheo</p>
+              </div>
+              <div className="flex space-x-3 w-full md:w-auto">
+                <input
+                  type="email"
+                  placeholder="Enter your email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                  disabled={isSubmitting}
+                  className="flex-1 md:w-64 px-4 py-2 bg-gray-50 border border-gray-200 rounded-lg text-black placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-orange-500/50 disabled:opacity-50 disabled:cursor-not-allowed"
+                />
+                <motion.button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="px-6 py-2 bg-gradient-to-r from-orange-500 to-pink-500 hover:from-orange-600 hover:to-pink-600 text-white rounded-lg font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  whileHover={{ scale: isSubmitting ? 1 : 1.05 }}
+                  whileTap={{ scale: isSubmitting ? 1 : 0.95 }}
+                >
+                  {isSubmitting ? 'Subscribing...' : 'Subscribe'}
+                </motion.button>
+              </div>
             </div>
-            <div className="flex space-x-3 w-full md:w-auto">
-              <input
-                type="email"
-                placeholder="Enter your email"
-                className="flex-1 md:w-64 px-4 py-2 bg-gray-50 border border-gray-200 rounded-lg text-black placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-orange-500/50"
-              />
-              <motion.button
-                className="px-6 py-2 bg-gradient-to-r from-orange-500 to-pink-500 hover:from-orange-600 hover:to-pink-600 text-white rounded-lg font-medium transition-colors"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                Subscribe
-              </motion.button>
-            </div>
-          </div>
+          </form>
         </motion.div>
 
         {/* Bottom Bar */}
