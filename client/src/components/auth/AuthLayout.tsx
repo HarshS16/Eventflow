@@ -76,10 +76,12 @@ const AuthLayout = ({ children, title, subtitle, userType = "organizer" }: AuthL
         >
           <div className="text-center mb-8">
             <motion.div 
-              className={`w-16 h-16 bg-gradient-to-r ${gradients[userType]} rounded-xl mx-auto mb-4 shadow-lg`}
+              className="w-16 h-16 mx-auto mb-4"
               whileHover={{ rotate: 360 }}
               transition={{ duration: 0.5 }}
-            />
+            >
+              <img src="/Rheo-logo.png" alt="Rheo" className="w-full h-full object-contain" />
+            </motion.div>
             <motion.h1 
               className="text-3xl font-bold mb-2 bg-gradient-to-r from-black to-gray-600 bg-clip-text text-transparent"
               initial={{ opacity: 0 }}

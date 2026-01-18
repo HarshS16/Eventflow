@@ -110,7 +110,7 @@ const Footer = () => {
               className="flex items-center space-x-2 mb-4"
               whileHover={{ scale: 1.05 }}
             >
-              <div className="w-8 h-8 bg-gradient-to-r from-orange-500 to-pink-500 rounded-lg shadow-lg" />
+              <img src="/Rheo-logo.png" alt="Rheo" className="w-8 h-8 object-contain" />
               <span className="text-xl font-bold bg-gradient-to-r from-black to-gray-600 bg-clip-text text-transparent">
                 Rheo
               </span>

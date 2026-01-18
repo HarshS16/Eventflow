@@ -69,8 +69,8 @@ const ComingSoon = () => {
                 ease: "linear"
               }}
             >
-              <div className="w-24 h-24 bg-gradient-to-r from-orange-500 to-pink-500 rounded-2xl flex items-center justify-center shadow-2xl">
-                <Clock className="w-12 h-12 text-white" />
+              <div className="w-24 h-24 rounded-2xl flex items-center justify-center shadow-2xl overflow-hidden">
+                <img src="/Rheo-logo.png" alt="Rheo" className="w-full h-full object-contain" />
               </div>
             </motion.div>
 
