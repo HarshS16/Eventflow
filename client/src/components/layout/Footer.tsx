@@ -106,14 +106,17 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 mb-8">
           {/* Company Info */}
           <div className="lg:col-span-2">
-            <motion.div 
-              className="flex items-center space-x-2 mb-4"
+           <motion.div 
+              className="flex items-center cursor-pointer h-16"
+              onClick={() => navigate('/')}
               whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
             >
-              <img src="/Rheo-logo.png" alt="Rheo" className="w-8 h-8 object-contain" />
-              <span className="text-xl font-bold bg-gradient-to-r from-black to-gray-600 bg-clip-text text-transparent">
-                Rheo
-              </span>
+              <img 
+                src="/Rheo-logo.png" 
+                alt="Rheo" 
+                className="w-24 h-24 object-contain translate-y-[2px]" 
+              />
             </motion.div>
             <p className="text-gray-600 mb-6 max-w-md">
               The complete platform connecting organizers, sponsors, and communities for seamless event management and meaningful partnerships.

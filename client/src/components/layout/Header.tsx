@@ -62,15 +62,16 @@ const Header = () => {
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
             <motion.div 
-              className="flex items-center space-x-2 cursor-pointer"
+              className="flex items-center cursor-pointer h-16"
               onClick={() => navigate('/')}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              <img src="/Rheo-logo.png" alt="Rheo" className="w-8 h-8 object-contain" />
-              <span className="text-xl font-bold bg-gradient-to-r from-black to-gray-600 bg-clip-text text-transparent">
-                Rheo
-              </span>
+              <img 
+                src="/Rheo-logo.png" 
+                alt="Rheo" 
+                className="w-24 h-24 object-contain translate-y-[2px]" 
+              />
             </motion.div>
 
             {/* Desktop Navigation */}
