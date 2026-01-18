@@ -27,6 +27,21 @@ app.use(cors({
 }));
 app.use(express.json());
 
+// Root route
+app.get('/', (req, res) => {
+  res.json({
+    message: 'Eventflow API Server',
+    version: '1.0.0',
+    endpoints: {
+      health: '/api/health',
+      events: '/api/events',
+      profiles: '/api/profiles',
+      auth: '/api/auth',
+      sponsorships: '/api/sponsorships'
+    }
+  });
+});
+
 // Health check endpoint
 app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() });
