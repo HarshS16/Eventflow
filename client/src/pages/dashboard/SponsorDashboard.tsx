@@ -7,6 +7,7 @@ import { Badge } from '@/components/ui/badge';
 import { Search, Target, DollarSign, TrendingUp, Settings, LogOut, Eye, Cloud, CloudRain, Sparkles, Calendar, MapPin, Users } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
+import RoleSwitcher from '@/components/RoleSwitcher';
 
 const SponsorDashboard = () => {
   const { user, signOut } = useAuth();
@@ -147,6 +148,7 @@ const SponsorDashboard = () => {
             <p className="text-gray-600">Welcome back, {profile?.full_name || user?.email}</p>
           </div>
           <div className="flex items-center gap-4">
+            <RoleSwitcher currentRole="sponsor" />
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
               <Button variant="outline" size="sm" className="border-gray-300 text-gray-700 hover:bg-gray-50">
                 <Settings className="w-4 h-4 mr-2" />

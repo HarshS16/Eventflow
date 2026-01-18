@@ -8,10 +8,10 @@ interface AuthLayoutProps {
   children: React.ReactNode;
   title: string;
   subtitle: string;
-  userType: "organizer" | "sponsor" | "community" | "participant";
+  userType?: "organizer" | "sponsor" | "community" | "participant";
 }
 
-const AuthLayout = ({ children, title, subtitle, userType }: AuthLayoutProps) => {
+const AuthLayout = ({ children, title, subtitle, userType = "organizer" }: AuthLayoutProps) => {
   const navigate = useNavigate();
 
   const gradients = {

@@ -22,36 +22,28 @@ const Index = () => {
       description: "Create, manage, and promote your events with powerful tools and seamless sponsor matching.",
       icon: Users,
       color: "from-orange-500 to-pink-500",
-      features: ["Event Management", "Sponsor Matching", "Analytics Dashboard", "Ticket Sales"],
-      cta: "Start Organizing",
-      href: "/organizer/signup"
+      features: ["Event Management", "Sponsor Matching", "Analytics Dashboard", "Ticket Sales"]
     },
     {
       title: "Sponsors",
       description: "Discover meaningful partnership opportunities and connect with events that align with your brand.",
       icon: Target,
       color: "from-pink-500 to-purple-500",
-      features: ["Event Discovery", "ROI Tracking", "Brand Exposure", "Partnership Management"],
-      cta: "Find Opportunities",
-      href: "/sponsor/signup"
+      features: ["Event Discovery", "ROI Tracking", "Brand Exposure", "Partnership Management"]
     },
     {
       title: "Community Partners",
       description: "Amplify local events and strengthen community connections through strategic partnerships.",
       icon: Globe,
       color: "from-purple-500 to-orange-500",
-      features: ["Community Events", "Local Networking", "Resource Sharing", "Impact Measurement"],
-      cta: "Join Community",
-      href: "/community/signup"
+      features: ["Community Events", "Local Networking", "Resource Sharing", "Impact Measurement"]
     },
     {
       title: "Event Participants",
       description: "Discover and register for events that match your interests and connect with communities.",
       icon: Users,
       color: "from-orange-500 to-pink-500",
-      features: ["Event Discovery", "Easy Registration", "Personal Dashboard", "Community Connections"],
-      cta: "Explore Events",
-      href: "/participant/signup"
+      features: ["Event Discovery", "Easy Registration", "Personal Dashboard", "Community Connections"]
     }
   ];
 
@@ -199,10 +191,20 @@ const Index = () => {
                   <Button 
                     size="lg" 
                     className="bg-gradient-to-r from-orange-500 to-pink-500 hover:from-orange-600 hover:to-pink-600 text-white px-8 py-4 text-lg shadow-2xl shadow-orange-500/25 group"
-                    onClick={() => navigate("/organizer/signup")}
+                    onClick={() => navigate("/signup")}
                   >
                     Get Started Free
                     <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                  </Button>
+                </motion.div>
+                <motion.div variants={itemVariants} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                  <Button 
+                    variant="outline" 
+                    size="lg"
+                    className="border-gray-300 text-gray-700 hover:bg-gray-50 px-8 py-4 text-lg"
+                    onClick={() => navigate("/login")}
+                  >
+                    Sign In
                   </Button>
                 </motion.div>
                 {/* <motion.div variants={itemVariants} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
@@ -296,20 +298,29 @@ const Index = () => {
                             </motion.li>
                           ))}
                         </ul>
-                        <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                          <Button 
-                            className={`w-full bg-gradient-to-r ${type.color} hover:opacity-90 text-white shadow-lg`}
-                            onClick={() => navigate(type.href)}
-                          >
-                            {type.cta}
-                            <ArrowRight className="ml-2 w-4 h-4" />
-                          </Button>
-                        </motion.div>
                       </CardContent>
                     </MagicCard>
                   </Card>
                 </motion.div>
               ))}
+            </motion.div>
+            
+            {/* Single CTA for all roles */}
+            <motion.div 
+              className="text-center mt-12"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+              viewport={{ once: true }}
+            >
+              <Button 
+                size="lg"
+                className="bg-gradient-to-r from-orange-500 to-pink-500 hover:from-orange-600 hover:to-pink-600 text-white px-10 py-4 text-lg shadow-2xl shadow-orange-500/25 group"
+                onClick={() => navigate("/signup")}
+              >
+                Get Started - Choose Your Role
+                <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              </Button>
             </motion.div>
           </div>
         </section>

@@ -8,6 +8,7 @@ import { Badge } from '@/components/ui/badge';
 import { Heart, Users, DollarSign, TrendingUp, Settings, LogOut, Share2, MessageSquare, Cloud, CloudRain, Sparkles } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
+import RoleSwitcher from '@/components/RoleSwitcher';
 
 const CommunityDashboard = () => {
   const { user, signOut } = useAuth();
@@ -132,6 +133,7 @@ const CommunityDashboard = () => {
             <p className="text-gray-600">Welcome back, {profile?.full_name || user?.email}</p>
           </div>
           <div className="flex items-center gap-4">
+            <RoleSwitcher currentRole="community" />
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
               <Button variant="outline" size="sm" className="border-gray-300 text-gray-700 hover:bg-gray-50">
                 <Settings className="w-4 h-4 mr-2" />

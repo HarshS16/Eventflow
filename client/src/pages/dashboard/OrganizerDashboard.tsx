@@ -9,6 +9,7 @@ import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import CreateEventModal from '@/components/CreateEventModal';
 import EventRegistrations from '@/components/EventRegistrations';
+import RoleSwitcher from '@/components/RoleSwitcher';
 import { useToast } from '@/hooks/use-toast';
 
 const OrganizerDashboard = () => {
@@ -152,6 +153,7 @@ const OrganizerDashboard = () => {
             <p className="text-gray-600">Welcome back, {profile?.full_name || user?.email}</p>
           </div>
           <div className="flex items-center gap-4">
+            <RoleSwitcher currentRole="organizer" />
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
               <Button variant="outline" size="sm" className="border-gray-300 text-gray-700 hover:bg-gray-50">
                 <Settings className="w-4 h-4 mr-2" />

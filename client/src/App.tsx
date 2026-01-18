@@ -9,17 +9,12 @@ import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import ComingSoon from "./pages/ComingSoon";
 import EventPage from "./pages/EventPage";
-import OrganizerSignup from "./pages/auth/OrganizerSignup";
-import OrganizerLogin from "./pages/auth/OrganizerLogin";
-import SponsorSignup from "./pages/auth/SponsorSignup";
-import SponsorLogin from "./pages/auth/SponsorLogin";
-import CommunitySignup from "./pages/auth/CommunitySignup";
-import CommunityLogin from "./pages/auth/CommunityLogin";
+import Signup from "./pages/auth/Signup";
+import Login from "./pages/auth/Login";
+import Onboarding from "./pages/Onboarding";
 import OrganizerDashboard from "./pages/dashboard/OrganizerDashboard";
 import SponsorDashboard from "./pages/dashboard/SponsorDashboard";
 import CommunityDashboard from "./pages/dashboard/CommunityDashboard";
-import ParticipantSignup from "./pages/auth/ParticipantSignup";
-import ParticipantLogin from "./pages/auth/ParticipantLogin";
 import ParticipantDashboard from "./pages/dashboard/ParticipantDashboard";
 
 const queryClient = new QueryClient();
@@ -34,18 +29,17 @@ const App = () => (
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/event/:eventId" element={<EventPage />} />
-            <Route path="/organizer/signup" element={<OrganizerSignup />} />
-            <Route path="/organizer/login" element={<OrganizerLogin />} />
-            <Route path="/sponsor/signup" element={<SponsorSignup />} />
-            <Route path="/sponsor/login" element={<SponsorLogin />} />
-            <Route path="/community/signup" element={<CommunitySignup />} />
-            <Route path="/community/login" element={<CommunityLogin />} />
-            <Route path="/participant/signup" element={<ParticipantSignup />} />
-            <Route path="/participant/login" element={<ParticipantLogin />} />
+            
+            {/* Unified Auth Routes */}
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/onboarding" element={<Onboarding />} />
+            
+            {/* Protected Dashboard Routes */}
             <Route 
               path="/organizer/dashboard" 
               element={
-                <ProtectedRoute>
+                <ProtectedRoute requiredRole="organizer">
                   <OrganizerDashboard />
                 </ProtectedRoute>
               } 
@@ -53,7 +47,7 @@ const App = () => (
             <Route 
               path="/sponsor/dashboard" 
               element={
-                <ProtectedRoute>
+                <ProtectedRoute requiredRole="sponsor">
                   <SponsorDashboard />
                 </ProtectedRoute>
               } 
@@ -61,7 +55,7 @@ const App = () => (
             <Route 
               path="/community/dashboard" 
               element={
-                <ProtectedRoute>
+                <ProtectedRoute requiredRole="community">
                   <CommunityDashboard />
                 </ProtectedRoute>
               } 
@@ -69,11 +63,13 @@ const App = () => (
             <Route 
               path="/participant/dashboard" 
               element={
-                <ProtectedRoute>
+                <ProtectedRoute requiredRole="participant">
                   <ParticipantDashboard />
                 </ProtectedRoute>
               } 
             />
+            
+            {/* Static Pages */}
             <Route path="/coming-soon" element={<ComingSoon />} />
             <Route path="/pricing" element={<ComingSoon />} />
             <Route path="/about" element={<ComingSoon />} />
@@ -88,6 +84,8 @@ const App = () => (
             <Route path="/terms" element={<ComingSoon />} />
             <Route path="/cookies" element={<ComingSoon />} />
             <Route path="/security" element={<ComingSoon />} />
+            
+            {/* 404 */}
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
