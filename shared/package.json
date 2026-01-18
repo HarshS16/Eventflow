@@ -1,0 +1,11 @@
+{
+    "name": "@eventflow/shared",
+    "private": true,
+    "version": "0.0.0",
+    "type": "module",
+    "main": "./types/database.ts",
+    "types": "./types/database.ts",
+    "exports": {
+        "./types": "./types/database.ts"
+    }
+}
