@@ -6,6 +6,7 @@ export interface AuthRequest extends Request {
         id: string;
         email?: string;
     };
+    authToken?: string;
 }
 
 export const authMiddleware = async (
@@ -32,6 +33,7 @@ export const authMiddleware = async (
             id: user.id,
             email: user.email
         };
+        req.authToken = token;
 
         next();
     } catch (error) {
@@ -39,3 +41,4 @@ export const authMiddleware = async (
         res.status(401).json({ error: 'Authentication failed' });
     }
 };
+

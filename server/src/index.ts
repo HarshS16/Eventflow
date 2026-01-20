@@ -16,6 +16,7 @@ import { eventsRouter } from './routes/events.js';
 import { profilesRouter } from './routes/profiles.js';
 import { authRouter } from './routes/auth.js';
 import { sponsorshipsRouter } from './routes/sponsorships.js';
+import { ticketsRouter } from './routes/tickets.js';
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -37,7 +38,8 @@ app.get('/', (req, res) => {
       events: '/api/events',
       profiles: '/api/profiles',
       auth: '/api/auth',
-      sponsorships: '/api/sponsorships'
+      sponsorships: '/api/sponsorships',
+      tickets: '/api/tickets'
     }
   });
 });
@@ -52,6 +54,7 @@ app.use('/api/events', eventsRouter);
 app.use('/api/profiles', profilesRouter);
 app.use('/api/auth', authRouter);
 app.use('/api/sponsorships', sponsorshipsRouter);
+app.use('/api/tickets', ticketsRouter);
 
 // Error handling middleware
 app.use((err: Error, req: express.Request, res: express.Response, next: express.NextFunction) => {

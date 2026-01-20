@@ -4,13 +4,14 @@ import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Plus, Calendar, Users, DollarSign, BarChart3, Settings, LogOut, Cloud, CloudRain, Sparkles, Share2, Eye } from 'lucide-react';
+import { Plus, Calendar, Users, DollarSign, BarChart3, Settings, LogOut, Cloud, CloudRain, Sparkles, Share2, Eye, Ticket, QrCode } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import CreateEventModal from '@/components/CreateEventModal';
 import EventRegistrations from '@/components/EventRegistrations';
 import RoleSwitcher from '@/components/RoleSwitcher';
 import { useToast } from '@/hooks/use-toast';
+import { IssueTicketsModal, TicketScanner } from '@/components/tickets';
 
 const OrganizerDashboard = () => {
   const { user, signOut } = useAuth();
@@ -21,6 +22,9 @@ const OrganizerDashboard = () => {
   const [loading, setLoading] = useState(true);
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [selectedEventForRegistrations, setSelectedEventForRegistrations] = useState<any>(null);
+  const [issueTicketsEvent, setIssueTicketsEvent] = useState<any>(null);
+  const [scannerEvent, setScannerEvent] = useState<any>(null);
+  const [registrationCounts, setRegistrationCounts] = useState<Record<string, number>>({});
 
   useEffect(() => {
     if (user) {
@@ -46,6 +50,23 @@ const OrganizerDashboard = () => {
       .order('created_at', { ascending: false });
     setEvents(data || []);
     setLoading(false);
+    // Fetch registration counts for each event
+    if (data && data.length > 0) {
+      fetchRegistrationCounts(data.map((e: any) => e.id));
+    }
+  };
+
+  const fetchRegistrationCounts = async (eventIds: string[]) => {
+    const counts: Record<string, number> = {};
+    for (const eventId of eventIds) {
+      const { count } = await supabase
+        .from('event_registrations')
+        .select('*', { count: 'exact', head: true })
+        .eq('event_id', eventId)
+        .eq('status', 'approved');
+      counts[eventId] = count || 0;
+    }
+    setRegistrationCounts(counts);
   };
 
   const handleSignOut = async () => {
@@ -315,29 +336,56 @@ const OrganizerDashboard = () => {
                       </div>
                       
                       {event.status === 'published' && (
-                        <div className="flex gap-2">
-                          <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="flex-1">
-                            <Button
-                              variant="outline"
-                              size="sm"
-                              onClick={() => shareEvent(event.id, event.title)}
-                              className="w-full border-orange-300 text-orange-600 hover:bg-orange-50"
-                            >
-                              <Share2 className="w-4 h-4 mr-2" />
-                              Share
-                            </Button>
-                          </motion.div>
-                          <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="flex-1">
-                            <Button
-                              variant="outline"
-                              size="sm"
-                              onClick={() => setSelectedEventForRegistrations(event)}
-                              className="w-full border-purple-300 text-purple-600 hover:bg-purple-50"
-                            >
-                              <Eye className="w-4 h-4 mr-2" />
-                              Registrations
-                            </Button>
-                          </motion.div>
+                        <div className="space-y-2">
+                          <div className="flex gap-2">
+                            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="flex-1">
+                              <Button
+                                variant="outline"
+                                size="sm"
+                                onClick={() => shareEvent(event.id, event.title)}
+                                className="w-full border-orange-300 text-orange-600 hover:bg-orange-50"
+                              >
+                                <Share2 className="w-4 h-4 mr-2" />
+                                Share
+                              </Button>
+                            </motion.div>
+                            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="flex-1">
+                              <Button
+                                variant="outline"
+                                size="sm"
+                                onClick={() => setSelectedEventForRegistrations(event)}
+                                className="w-full border-purple-300 text-purple-600 hover:bg-purple-50"
+                              >
+                                <Eye className="w-4 h-4 mr-2" />
+                                Registrations
+                              </Button>
+                            </motion.div>
+                          </div>
+                          {/* Ticket Actions */}
+                          <div className="flex gap-2">
+                            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="flex-1">
+                              <Button
+                                size="sm"
+                                onClick={() => setIssueTicketsEvent(event)}
+                                className="w-full bg-gradient-to-r from-orange-500 to-pink-500 hover:from-orange-600 hover:to-pink-600 text-white"
+                                disabled={!registrationCounts[event.id]}
+                              >
+                                <Ticket className="w-4 h-4 mr-2" />
+                                Issue QR ({registrationCounts[event.id] || 0})
+                              </Button>
+                            </motion.div>
+                            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="flex-1">
+                              <Button
+                                size="sm"
+                                variant="outline"
+                                onClick={() => setScannerEvent(event)}
+                                className="w-full border-green-300 text-green-600 hover:bg-green-50"
+                              >
+                                <QrCode className="w-4 h-4 mr-2" />
+                                Scan QR
+                              </Button>
+                            </motion.div>
+                          </div>
                         </div>
                       )}
                     </CardContent>
@@ -388,6 +436,30 @@ const OrganizerDashboard = () => {
         onClose={() => setIsCreateModalOpen(false)}
         onEventCreated={fetchEvents}
       />
+
+      {/* Issue Tickets Modal */}
+      {issueTicketsEvent && (
+        <IssueTicketsModal
+          eventId={issueTicketsEvent.id}
+          eventTitle={issueTicketsEvent.title}
+          approvedCount={registrationCounts[issueTicketsEvent.id] || 0}
+          isOpen={!!issueTicketsEvent}
+          onClose={() => setIssueTicketsEvent(null)}
+          onSuccess={() => {
+            // Optionally refresh data
+          }}
+        />
+      )}
+
+      {/* QR Scanner */}
+      {scannerEvent && (
+        <TicketScanner
+          eventId={scannerEvent.id}
+          eventTitle={scannerEvent.title}
+          isOpen={!!scannerEvent}
+          onClose={() => setScannerEvent(null)}
+        />
+      )}
     </div>
   );
 };

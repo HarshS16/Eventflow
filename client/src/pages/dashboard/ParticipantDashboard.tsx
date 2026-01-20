@@ -4,11 +4,12 @@ import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Search, Calendar, Users, DollarSign, Settings, LogOut, Cloud, CloudRain, Eye, UserCheck } from 'lucide-react';
+import { Search, Calendar, Users, DollarSign, Settings, LogOut, Cloud, CloudRain, Eye, UserCheck, Ticket } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import EventRegistrationForm from '@/components/EventRegistrationForm';
 import RoleSwitcher from '@/components/RoleSwitcher';
+import { MyTickets } from '@/components/tickets';
 
 const ParticipantDashboard = () => {
   const { user, signOut } = useAuth();
@@ -208,6 +209,16 @@ const ParticipantDashboard = () => {
               </Card>
             </motion.div>
           ))}
+        </motion.div>
+
+        {/* My Tickets Section */}
+        <motion.div
+          className="mb-8"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.5 }}
+        >
+          <MyTickets />
         </motion.div>
 
         {/* Search and Filters */}

@@ -46,16 +46,22 @@ export const supabase = {
     }
 };
 
-// Create a client for authenticated requests (when verifying user tokens)
+// Create a client for authenticated requests using user's JWT
+// Uses ANON key with user's access token for proper RLS evaluation
 export const createAuthClient = (accessToken: string) => {
     const SUPABASE_URL = getEnvVar('SUPABASE_URL', process.env.VITE_SUPABASE_URL);
-    const SUPABASE_SERVICE_KEY = getEnvVar('SUPABASE_SERVICE_ROLE_KEY', process.env.VITE_SUPABASE_ANON_KEY);
+    // For RLS to work with user context, use ANON key with user's JWT
+    const SUPABASE_ANON_KEY = getEnvVar('VITE_SUPABASE_ANON_KEY');
 
-    return createClient<Database>(SUPABASE_URL, SUPABASE_SERVICE_KEY, {
+    return createClient<Database>(SUPABASE_URL, SUPABASE_ANON_KEY, {
         global: {
             headers: {
                 Authorization: `Bearer ${accessToken}`
             }
+        },
+        auth: {
+            autoRefreshToken: false,
+            persistSession: false
         }
     });
 };

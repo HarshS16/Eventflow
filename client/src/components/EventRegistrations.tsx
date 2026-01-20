@@ -5,9 +5,10 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { Users, CheckCircle, XCircle, Clock } from 'lucide-react';
+import { Users, CheckCircle, XCircle, Clock, Ticket, Loader2 } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
+import { issueSingleTicket } from '@/api/tickets';
 
 interface EventRegistrationsProps {
   eventId: string;
@@ -17,10 +18,13 @@ interface EventRegistrationsProps {
 const EventRegistrations = ({ eventId, eventTitle }: EventRegistrationsProps) => {
   const { toast } = useToast();
   const [registrations, setRegistrations] = useState<any[]>([]);
+  const [tickets, setTickets] = useState<Record<string, any>>({});
   const [loading, setLoading] = useState(true);
+  const [issuingTicket, setIssuingTicket] = useState<string | null>(null);
 
   useEffect(() => {
     fetchRegistrations();
+    fetchTickets();
   }, [eventId]);
 
   const fetchRegistrations = async () => {
@@ -40,6 +44,65 @@ const EventRegistrations = ({ eventId, eventTitle }: EventRegistrationsProps) =>
       console.error('Error:', error);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const fetchTickets = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('event_tickets')
+        .select('*')
+        .eq('event_id', eventId);
+
+      if (!error && data) {
+        const ticketMap: Record<string, any> = {};
+        data.forEach((ticket: any) => {
+          ticketMap[ticket.registration_id] = ticket;
+        });
+        setTickets(ticketMap);
+      }
+    } catch (error) {
+      console.error('Error fetching tickets:', error);
+    }
+  };
+
+  const handleIssueTicket = async (registrationId: string) => {
+    try {
+      setIssuingTicket(registrationId);
+      const result = await issueSingleTicket(registrationId);
+      
+      toast({
+        title: "Ticket Issued",
+        description: result.emailSent 
+          ? "Ticket sent to participant via email" 
+          : "Ticket created but email failed to send",
+      });
+
+      fetchTickets();
+    } catch (error: any) {
+      toast({
+        title: "Error",
+        description: error.response?.data?.error || "Failed to issue ticket",
+        variant: "destructive"
+      });
+    } finally {
+      setIssuingTicket(null);
+    }
+  };
+
+  const getTicketStatus = (registrationId: string) => {
+    const ticket = tickets[registrationId];
+    if (!ticket) return null;
+    
+    switch (ticket.status) {
+      case 'issued':
+        return <Badge className="bg-blue-100 text-blue-700 border-blue-300">Ticket Issued</Badge>;
+      case 'used':
+        return <Badge className="bg-gray-100 text-gray-700 border-gray-300">Checked In</Badge>;
+      case 'cancelled':
+        return <Badge className="bg-red-100 text-red-700 border-red-300">Cancelled</Badge>;
+      default:
+        return null;
     }
   };
 
@@ -119,6 +182,7 @@ const EventRegistrations = ({ eventId, eventTitle }: EventRegistrationsProps) =>
                   <TableHead>Phone</TableHead>
                   <TableHead>Company</TableHead>
                   <TableHead>Status</TableHead>
+                  <TableHead>Ticket</TableHead>
                   <TableHead>Actions</TableHead>
                 </TableRow>
               </TableHeader>
@@ -130,6 +194,33 @@ const EventRegistrations = ({ eventId, eventTitle }: EventRegistrationsProps) =>
                     <TableCell>{registration.phone || '-'}</TableCell>
                     <TableCell>{registration.company || '-'}</TableCell>
                     <TableCell>{getStatusBadge(registration.status)}</TableCell>
+                    <TableCell>
+                      {registration.status === 'approved' ? (
+                        tickets[registration.id] ? (
+                          getTicketStatus(registration.id)
+                        ) : (
+                          <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                            <Button
+                              size="sm"
+                              onClick={() => handleIssueTicket(registration.id)}
+                              disabled={issuingTicket === registration.id}
+                              className="bg-gradient-to-r from-orange-500 to-pink-500 hover:from-orange-600 hover:to-pink-600 text-white text-xs"
+                            >
+                              {issuingTicket === registration.id ? (
+                                <Loader2 className="w-3 h-3 animate-spin" />
+                              ) : (
+                                <>
+                                  <Ticket className="w-3 h-3 mr-1" />
+                                  Issue
+                                </>
+                              )}
+                            </Button>
+                          </motion.div>
+                        )
+                      ) : (
+                        <span className="text-gray-400 text-xs">-</span>
+                      )}
+                    </TableCell>
                     <TableCell>
                       <div className="flex gap-2">
                         {registration.status !== 'approved' && (
