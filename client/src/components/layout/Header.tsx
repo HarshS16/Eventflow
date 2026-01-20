@@ -33,12 +33,6 @@ const Header = () => {
     { label: 'Contact', href: '/#contact', public: true },
   ];
 
-  const authItems = [
-    { label: 'Organizer', loginHref: '/organizer/login', signupHref: '/organizer/signup' },
-    { label: 'Sponsor', loginHref: '/sponsor/login', signupHref: '/sponsor/signup' },
-    { label: 'Community', loginHref: '/community/login', signupHref: '/community/signup' },
-  ];
-
   return (
     <motion.header 
       className={`sticky top-0 z-50 transition-all duration-500 ${
@@ -138,7 +132,7 @@ const Header = () => {
                     <Button
                       variant="outline"
                       size="sm"
-                      onClick={() => setIsMenuOpen(!isMenuOpen)}
+                      onClick={() => navigate('/login')}
                       className="border-gray-300 text-gray-700 hover:bg-gray-50"
                     >
                       <LogIn className="w-4 h-4 mr-2" />
@@ -148,7 +142,7 @@ const Header = () => {
                   <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                     <Button
                       size="sm"
-                      onClick={() => setIsMenuOpen(!isMenuOpen)}
+                      onClick={() => navigate('/signup')}
                       className="bg-gradient-to-r from-orange-500 to-pink-500 hover:from-orange-600 hover:to-pink-600 text-white shadow-lg shadow-orange-500/25"
                     >
                       <UserPlus className="w-4 h-4 mr-2" />
@@ -168,54 +162,6 @@ const Header = () => {
               {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
             </motion.button>
           </div>
-
-          {/* Auth Dropdown Menu */}
-          <AnimatePresence>
-            {isMenuOpen && !user && (
-              <motion.div
-                initial={{ opacity: 0, y: -10, scale: 0.95 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                exit={{ opacity: 0, y: -10, scale: 0.95 }}
-                transition={{ duration: 0.2 }}
-                className="absolute top-16 right-6 bg-white/95 backdrop-blur-md border border-gray-200 rounded-lg shadow-xl p-4 min-w-[200px]"
-              >
-                <div className="space-y-3">
-                  {authItems.map((item) => (
-                    <div key={item.label} className="space-y-2">
-                      <h4 className="text-sm font-medium text-gray-700">{item.label}</h4>
-                      <div className="flex space-x-2">
-                        <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                          <Button
-                            variant="outline"
-                            size="sm"
-                            onClick={() => {
-                              navigate(item.loginHref);
-                              setIsMenuOpen(false);
-                            }}
-                            className="border-gray-300 text-gray-700 hover:bg-gray-50 text-xs"
-                          >
-                            Login
-                          </Button>
-                        </motion.div>
-                        <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                          <Button
-                            size="sm"
-                            onClick={() => {
-                              navigate(item.signupHref);
-                              setIsMenuOpen(false);
-                            }}
-                            className="bg-gradient-to-r from-orange-500 to-pink-500 hover:from-orange-600 hover:to-pink-600 text-white text-xs"
-                          >
-                            Sign Up
-                          </Button>
-                        </motion.div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
 
           {/* Mobile Navigation Menu */}
           <AnimatePresence>
@@ -251,7 +197,7 @@ const Header = () => {
                       {item.label}
                     </motion.a>
                   ))}
-                  {user && (
+                  {user ? (
                     <div className="pt-4 border-t border-gray-200 space-y-2">
                       <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
                         <Button
@@ -277,6 +223,36 @@ const Header = () => {
                           className="w-full border-red-300 text-red-600 hover:bg-red-50"
                         >
                           Sign Out
+                        </Button>
+                      </motion.div>
+                    </div>
+                  ) : (
+                    <div className="pt-4 border-t border-gray-200 space-y-2">
+                      <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => {
+                            navigate('/login');
+                            setIsMenuOpen(false);
+                          }}
+                          className="w-full border-gray-300 text-gray-700 hover:bg-gray-50"
+                        >
+                          <LogIn className="w-4 h-4 mr-2" />
+                          Sign In
+                        </Button>
+                      </motion.div>
+                      <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+                        <Button
+                          size="sm"
+                          onClick={() => {
+                            navigate('/signup');
+                            setIsMenuOpen(false);
+                          }}
+                          className="w-full bg-gradient-to-r from-orange-500 to-pink-500 hover:from-orange-600 hover:to-pink-600 text-white"
+                        >
+                          <UserPlus className="w-4 h-4 mr-2" />
+                          Sign Up
                         </Button>
                       </motion.div>
                     </div>
