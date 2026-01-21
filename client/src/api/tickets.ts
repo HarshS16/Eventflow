@@ -2,6 +2,9 @@ import { supabase } from '@/integrations/supabase/client';
 
 const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001/api';
 
+// Debug: Log the API URL being used
+console.log('[Tickets API] Using API_BASE_URL:', API_BASE_URL);
+
 // Helper to get auth token
 async function getAuthToken(): Promise<string | null> {
     const { data: { session } } = await supabase.auth.getSession();
@@ -24,15 +27,38 @@ async function authFetch<T>(
         (headers as Record<string, string>)['Authorization'] = `Bearer ${token}`;
     }
 
-    const response = await fetch(`${API_BASE_URL}${endpoint}`, {
+    const fullUrl = `${API_BASE_URL}${endpoint}`;
+    console.log('[Tickets API] Fetching:', fullUrl);
+
+    const response = await fetch(fullUrl, {
         ...options,
         headers,
     });
 
     if (!response.ok) {
-        const error = await response.json().catch(() => ({ error: 'Request failed' }));
-        const err = new Error(error.error || `HTTP ${response.status}`);
-        (err as any).response = { data: error };
+        let errorMessage = `HTTP ${response.status}`;
+        let errorData: any = { error: errorMessage };
+
+        try {
+            const text = await response.text();
+            // Try to parse as JSON first
+            try {
+                errorData = JSON.parse(text);
+                errorMessage = errorData.error || errorData.message || errorMessage;
+            } catch {
+                // If not JSON, use the text (might be HTML error page)
+                if (text.includes('Cannot')) {
+                    errorMessage = `Route not found: ${endpoint}`;
+                } else {
+                    errorMessage = text.substring(0, 200) || errorMessage;
+                }
+            }
+        } catch {
+            // Couldn't read response body
+        }
+
+        const err = new Error(errorMessage);
+        (err as any).response = { data: errorData, status: response.status };
         throw err;
     }
 
