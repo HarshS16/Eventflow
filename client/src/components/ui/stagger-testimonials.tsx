@@ -21,7 +21,7 @@ const testimonials = [
   },
   {
     tempId: 2,
-    testimonial: "The community features help us amplify local events and create meaningful connections in our neighborhood.",
+    testimonial: "The community features help us amplify local events and create meaningful connections in our neighborhood increasing our reach.",
     by: "Emily Rodriguez, Community Manager at Local Impact",
     imgSrc: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop"
   },
