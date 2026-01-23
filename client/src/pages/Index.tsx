@@ -440,7 +440,7 @@ const Index = () => {
               Contact Us
             </h2>
             <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
-              Questions or partnerships? Reach out — we’d love to help you create amazing events.
+              Questions or collaborations ? Reach out — we’d love to help you create amazing events.
             </p>
             <motion.div 
               className="flex flex-col sm:flex-row gap-4 justify-center"
