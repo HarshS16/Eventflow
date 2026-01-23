@@ -160,7 +160,7 @@ const ParticipantDashboard = () => {
           <div className="flex items-center gap-4">
             <RoleSwitcher currentRole="participant" />
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-              <Button variant="outline" size="sm" className="border-gray-300 text-gray-700 hover:bg-gray-50">
+              <Button variant="outline" size="sm" onClick={() => navigate('/settings')} className="border-gray-300 text-gray-700 hover:bg-gray-50">
                 <Settings className="w-4 h-4 mr-2" />
                 Settings
               </Button>
