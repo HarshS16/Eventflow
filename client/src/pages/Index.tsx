@@ -79,8 +79,8 @@ const Index = () => {
       area: "md:[grid-area:3/1/4/7] xl:[grid-area:2/8/3/10]"
     },
     {
-      title: "24/7 support",
-      description: "Always-available customer support team ready to help you succeed.",
+      title: "QR Ticketing",
+      description: "Bulk QR ticketing provided to all the participants of the events",
       icon: Headphones,
       area: "md:[grid-area:3/7/4/13] xl:[grid-area:2/10/3/13]"
     }
