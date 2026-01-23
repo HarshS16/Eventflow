@@ -21,7 +21,7 @@ const NotFound = () => {
           <h1 className="text-4xl font-bold mb-4 text-black">404</h1>
           <p className="text-xl text-gray-600 mb-4">Oops! Page not found</p>
           <p className="text-gray-500 mb-6">
-            The page you're looking for doesn't exist or has been moved.
+            The page you're looking for doesn't exist or has been moved. We're sorry for the inconvenience.
           </p>
           <Button 
             onClick={() => window.location.href = '/'}
