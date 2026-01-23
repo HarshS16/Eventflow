@@ -15,7 +15,7 @@ const testimonials = [
   },
   {
     tempId: 1,
-    testimonial: "We've found incredible partnership opportunities through Rheo. The platform makes it easy to track our ROI.",
+    testimonial: "We've found incredible partnership opportunities through Rheo. The platform makes it easy to track our returns.",
     by: "Michael Chen, Marketing Director at BrandMax",
     imgSrc: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop"
   },
