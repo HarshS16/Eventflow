@@ -196,20 +196,31 @@ const CommunityDashboard = () => {
           <h2 className="text-xl font-semibold mb-6 bg-gradient-to-r from-black to-gray-600 bg-clip-text text-transparent">Community Tools</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-              <Button className="bg-gradient-to-r from-purple-500 to-orange-500 hover:from-purple-600 hover:to-orange-600 h-16 w-full shadow-lg shadow-purple-500/25 group">
+              <Button 
+                onClick={() => navigate('/community/promote')}
+                className="bg-gradient-to-r from-purple-500 to-orange-500 hover:from-purple-600 hover:to-orange-600 h-16 w-full shadow-lg shadow-purple-500/25 group"
+              >
                 <Share2 className="w-5 h-5 mr-2 group-hover:rotate-12 transition-transform" />
                 Promote Events
                 <Sparkles className="w-4 h-4 ml-2 group-hover:rotate-12 transition-transform" />
               </Button>
             </motion.div>
             <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-              <Button variant="outline" className="border-gray-300 text-gray-700 hover:bg-gray-50 h-16 w-full">
+              <Button 
+                onClick={() => navigate('/community/engage')}
+                variant="outline" 
+                className="border-gray-300 text-gray-700 hover:bg-gray-50 h-16 w-full"
+              >
                 <MessageSquare className="w-5 h-5 mr-2" />
                 Engage Community
               </Button>
             </motion.div>
             <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-              <Button variant="outline" className="border-gray-300 text-gray-700 hover:bg-gray-50 h-16 w-full">
+              <Button 
+                onClick={() => navigate('/community/analytics')}
+                variant="outline" 
+                className="border-gray-300 text-gray-700 hover:bg-gray-50 h-16 w-full"
+              >
                 <TrendingUp className="w-5 h-5 mr-2" />
                 View Analytics
               </Button>
