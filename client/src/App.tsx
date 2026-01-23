@@ -21,6 +21,7 @@ import EngageCommunity from "./pages/community/EngageCommunity";
 import CommunityAnalytics from "./pages/community/CommunityAnalytics";
 import ManageSponsors from "./pages/organizer/ManageSponsors";
 import OrganizerAnalytics from "./pages/organizer/OrganizerAnalytics";
+import Settings from "./pages/Settings";
 
 const queryClient = new QueryClient();
 
@@ -39,6 +40,16 @@ const App = () => (
             <Route path="/signup" element={<Signup />} />
             <Route path="/login" element={<Login />} />
             <Route path="/onboarding" element={<Onboarding />} />
+            
+            {/* Settings Route (protected, any authenticated user) */}
+            <Route 
+              path="/settings" 
+              element={
+                <ProtectedRoute>
+                  <Settings />
+                </ProtectedRoute>
+              } 
+            />
             
             {/* Protected Dashboard Routes */}
             <Route 
