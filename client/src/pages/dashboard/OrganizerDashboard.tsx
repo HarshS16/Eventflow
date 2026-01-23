@@ -249,12 +249,20 @@ const OrganizerDashboard = () => {
               </Button>
             </motion.div>
             <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-              <Button variant="outline" className="border-gray-300 text-gray-700 hover:bg-gray-50 h-16 w-full">
+              <Button 
+                variant="outline" 
+                className="border-gray-300 text-gray-700 hover:bg-gray-50 h-16 w-full"
+                onClick={() => navigate('/organizer/sponsors')}
+              >
                 Manage Sponsors
               </Button>
             </motion.div>
             <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-              <Button variant="outline" className="border-gray-300 text-gray-700 hover:bg-gray-50 h-16 w-full">
+              <Button 
+                variant="outline" 
+                className="border-gray-300 text-gray-700 hover:bg-gray-50 h-16 w-full"
+                onClick={() => navigate('/organizer/analytics')}
+              >
                 View Analytics
               </Button>
             </motion.div>

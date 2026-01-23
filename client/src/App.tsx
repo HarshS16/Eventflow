@@ -19,6 +19,8 @@ import ParticipantDashboard from "./pages/dashboard/ParticipantDashboard";
 import PromoteEvents from "./pages/community/PromoteEvents";
 import EngageCommunity from "./pages/community/EngageCommunity";
 import CommunityAnalytics from "./pages/community/CommunityAnalytics";
+import ManageSponsors from "./pages/organizer/ManageSponsors";
+import OrganizerAnalytics from "./pages/organizer/OrganizerAnalytics";
 
 const queryClient = new QueryClient();
 
@@ -44,6 +46,22 @@ const App = () => (
               element={
                 <ProtectedRoute requiredRole="organizer">
                   <OrganizerDashboard />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="/organizer/sponsors" 
+              element={
+                <ProtectedRoute requiredRole="organizer">
+                  <ManageSponsors />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="/organizer/analytics" 
+              element={
+                <ProtectedRoute requiredRole="organizer">
+                  <OrganizerAnalytics />
                 </ProtectedRoute>
               } 
             />
