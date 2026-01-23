@@ -27,7 +27,7 @@ const testimonials = [
   },
   {
     tempId: 3,
-    testimonial: "My favorite solution in the market. We work 5x faster with Rheo.",
+    testimonial: "My favorite solution in the market. We work 5x faster with Rheo. It really optimizes event management.",
     by: "Alex Thompson, CEO at EventPro",
     imgSrc: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop"
   },
