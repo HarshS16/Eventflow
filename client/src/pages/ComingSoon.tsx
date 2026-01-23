@@ -82,7 +82,7 @@ const ComingSoon = () => {
               transition={{ delay: 0.2 }}
             >
               <Sparkles className="w-5 h-5 text-orange-500" />
-              <span className="text-gray-700 font-medium">Something Amazing is Brewing</span>
+              <span className="text-gray-700 font-medium">Something Amazing is Cooking...</span>
             </motion.div>
 
             {/* Main Heading */}
